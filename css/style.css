@@ -1,0 +1,124 @@
+* {
+  font-family: "DM Sans", sans-serif;
+}
+
+.sredinaPocetna {
+  height: calc(100vh - 34.4px);
+  margin: 0;
+}
+.sredinaUser {
+  height: calc(100vh - 34.4px);
+  padding-top: 56px;
+  margin: 0;
+  /*background-color: #a3e08e;*/
+}
+
+/* ------------------------------------------------------------------------------------------------------- Navigacija  */
+
+@media (min-width: 768px) {
+  /* Pozicionira svari u navigacji na sredinu */
+  .navbar-nav {
+    float: none;
+    margin: 0 auto;
+    display: block;
+    text-align: center;
+  }
+
+  .navbar-nav > li {
+    display: inline-block;
+    float: none;
+  }
+}
+
+/* ------------------------------------------------------------------------------------------------------- Lijevo  */
+
+.left {
+  background-color: #baf4a5;
+}
+
+#avocadoGif {
+  width: calc(498px - 10%);
+  height: calc(373px - 10%);
+  position: relative;
+  left: 40%;
+  transform: translateX(-40%);
+  margin-top: -50px;
+}
+
+/* ------------------------------------------------------------------------------------------------------- Desno  */
+
+.forma {
+  position: relative;
+  top: 5%;
+  transform: translateY(-5%);
+}
+
+.login {
+  width: 450px;
+}
+.login p {
+  font-size: 20px;
+  text-align: center;
+  margin-bottom: 15px 0;
+}
+
+.pocetnaNasov {
+  text-align: center;
+  margin-bottom: 80px;
+}
+
+.vertical-center {
+  position: relative;
+  top: 30%;
+  transform: translateY(-30%);
+}
+
+/* ------------------------------------------------------------------------------------------------------- Footer  */
+
+.footer-copyright {
+  background: #222;
+  padding: 5px 0;
+}
+.footer-copyright p {
+  color: #969696;
+  margin: 2px 0 0 0;
+  font-size: 15px;
+}
+
+/* ------------------------------------------------------------------------------------------------------- Modal  */
+
+.modal {
+  padding-left: 0;
+  padding-right: 0 !important;
+}
+
+/* -------------------------------------------------------------------------------------------------------   */
+/* ------------------------------------------------------------------------------------------------------- Mainly moji_zadaci.html  */
+/* -------------------------------------------------------------------------------------------------------   */
+
+.izbornik {
+  margin: 50px auto;
+  width: 50%;
+}
+.izbornikKreirani {
+  margin: 50px auto;
+  width: 40%;
+}
+.has-search .form-control {
+  padding-left: 2.375rem;
+}
+.has-search .form-control-feedback {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #aaa;
+}
+
+.noviZadatak p {
+  font-size: 20px;
+}

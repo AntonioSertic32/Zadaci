@@ -1,0 +1,222 @@
+<div class="row sredinaPocetna" ng-init="CheckLoggedIn();">
+  <!-- LIJEVO -->
+  <div class="col-md-6 left">
+    <img
+      src="http://localhost/Zadaci(FromBeginning)/assets/img/6.jpeg"
+      class="img-fluid"
+      alt="Responsive image"
+    />
+    <img
+      src="http://localhost/Zadaci(FromBeginning)/assets/img/gif2.gif"
+      class="img-fluid"
+      id="avocadoGif"
+      alt="gif"
+    />
+  </div>
+
+  <!-- DESNO -->
+  <div class="col-md-6 right">
+    <!-- FORMA-->
+    <div class="forma align-self-center">
+      <form>
+        <div class="form-row">
+          <div class="form-group col-md-5">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Unesite email"
+              ng-model="email"
+            />
+            <!-- type="email" -->
+          </div>
+          <div class="form-group col-md-5">
+            <input
+              type="password"
+              class="form-control"
+              placeholder="Lozinka"
+              ng-model="pass"
+            />
+            <!--<a class="forgot" href="#">Zaboravili ste lozinku?</a>-->
+          </div>
+          <div class="form-group col-md-2">
+            <button type="submit" class="btn btn-dark" ng-click="Prijava()">
+              Prijava
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="naslovIforma vertical-center">
+      <h5 class="pocetnaNasov">
+        “The humblest tasks get beautified if loving hands do them.” <br />
+        ― Louisa May Alcott, Little Women
+      </h5>
+      <div class="container-sm login">
+        <p>Pridrži se Avoca To-Do! Danas.</p>
+        <button
+          type="button"
+          class="btn btn-dark btn-lg btn-block"
+          ng-click="modalRegistracija()"
+        >
+          Registracija
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-copyright">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p>
+            Copyright Avoca To-Do! © 2020.
+            <span class="novired">All rights reserved.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- The Modal -->
+<div class="modal fade" id="modalSignUp">
+  <div class="modal-dialog modal-lg">
+    <!-- modal-dialog-centered na sredinu ekrana okomito -->
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">Sign up</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div
+          class="alert {{alertClass}} alert-dismissible text-center"
+          ng-show="alertMsg"
+        >
+          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
+            >&times;</a
+          >{{alertMessage}}
+        </div>
+
+        <div
+          class="alert alert-danger alert-dismissible text-center"
+          ng-show="myForm.input.$error.email"
+        >
+          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
+            >&times;</a
+          >Not valid email!
+        </div>
+
+        <form name="myForm" method="POST">
+          <div class="form-group">
+            <label for="inputName">Ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputName"
+              placeholder="Ime"
+              ng-model="regIme"
+            />
+          </div>
+          <div class="form-group">
+            <label for="inputSurname">Prezime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputSurname"
+              placeholder="Prezime"
+              ng-model="regPrezime"
+            />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputEmail1">Email adresa</label>
+            <input
+              type="email"
+              class="form-control"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Unesite email"
+              ng-model="regEmail"
+              name="input"
+              required
+            />
+            <small id="emailHelp" class="form-text text-muted"
+              >Nikad nećemo davati vaš email drugima.</small
+            >
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Lozinka</label>
+            <input
+              type="password"
+              class="form-control"
+              id="exampleInputPassword1"
+              placeholder="Lozinka"
+              ng-model="regLozinka"
+            />
+          </div>
+          <!--
+          <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-sm-2 pt-0">Spol</legend>
+              <div class="col-sm-10">
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gridRadios"
+                    id="gridRadios1"
+                    value="option1"
+                  />
+                  <label class="form-check-label" for="gridRadios1">
+                    Muško
+                  </label>
+                </div>
+                <div class="form-check">
+                  <input
+                    class="form-check-input"
+                    type="radio"
+                    name="gridRadios"
+                    id="gridRadios2"
+                    value="option2"
+                  />
+                  <label class="form-check-label" for="gridRadios2">
+                    Žensko
+                  </label>
+                </div>
+              </div>
+            </div>
+          </fieldset>
+          -->
+          <div class="form-group">
+            <label for="inputUsername">Korisničko ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputUsername"
+              placeholder="Korisnik123"
+              ng-model="regKorisnickoIme"
+            />
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" ng-click="Registracija()" class="btn btn-dark">
+          Pošalji
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
