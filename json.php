@@ -11,7 +11,8 @@ if (isset($_GET['json_id'])) {
 $oJson = array();
 switch ($sJsonID) {
     case 'dohvati_zadatke':
-        $sQuery = "SELECT * FROM zadatak ";
+        /* SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelji, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelji=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id*/
+        $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelji, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelji=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id";
         $oRecord = $oConnection->query($sQuery);
         while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
             $oZadaci = new Zadatak(
@@ -26,7 +27,38 @@ switch ($sJsonID) {
             );
             array_push($oJson, $oZadaci);
         }
-        break;
+    break;
+
+    case 'dohvati_korisnike':
+        $sQuery = "SELECT * FROM korisnik";
+        $oRecord = $oConnection->query($sQuery);
+        while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
+            $oKorisnik = new Korisnik(
+                $oRow['id'],
+                $oRow['ime'],
+                $oRow['prezime'],
+                $oRow['lozinka'],
+                $oRow['email'],
+                $oRow['korisnicko_ime']
+            );
+            array_push($oJson, $oKorisnik);
+        }
+    break;
+
+    case 'dohvati_komentare':
+        $sQuery = "SELECT * FROM komentar";
+        $oRecord = $oConnection->query($sQuery);
+        while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
+            $oKomentar = new Komentar(
+                $oRow['id'],
+                $oRow['korisnik'],
+                $oRow['opis'],
+                $oRow['datum'],
+                $oRow['zadatak']
+            );
+            array_push($oJson, $oKomentar);
+        }
+    break;
 }
 echo json_encode($oJson);
 ?>

@@ -14,7 +14,7 @@ switch($sAction)
 
             echo json_encode(array(
                 "status" => 1,
-                "user_id" => $_SESSION['user_id'],
+                "user_id" => $_SESSION['user_id']
             ));
         } else {
             echo json_encode(array(
@@ -34,10 +34,9 @@ switch($sAction)
 
         if ($count > 0) {
             $_SESSION['user_id'] = $row['id'];
-            $_SESSION['korisnicko_ime'] = $row['korisnicko_ime'];
             echo json_encode(array(
                 "status" => 1,
-                "user_id" => $_SESSION['user_id'],
+                "user_id" => $_SESSION['user_id']
             ));
         } else {
             echo json_encode(array(
@@ -54,7 +53,7 @@ switch($sAction)
 		$Lozinka = $oPostData->lozinka;
         $KorisnickoIme = $oPostData->korisnickoIme;
         
-        $sQueryOne = "SELECT email FROM korisnik WHERE email='$Email'"; // OR korisnicko_ime='$KorisnickoIme'";
+        $sQueryOne = "SELECT email FROM korisnik WHERE email='$Email'";
         $oRecord = $oConnection->query($sQueryOne);
         $row = $oRecord->fetch();
         $count = $oRecord->rowCount();
@@ -90,8 +89,6 @@ switch($sAction)
             }
 
         }
-
-		
     break;
 
 	case 'logout':

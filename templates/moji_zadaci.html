@@ -40,7 +40,7 @@
         aria-haspopup="true"
         aria-expanded="false"
       >
-        A
+        Username
       </button>
       <div
         class="dropdown-menu dropdown-menu-right text-center"
@@ -54,7 +54,7 @@
   </div>
 </nav>
 
-<div class="sredinaUser" ng-init="dohvatiZadatke()">
+<div class="sredinaUser" ng-init="dohvatiMojeZadatke()">
   <!-- Izbornik -->
   <div class="izbornik d-flex justify-content-sm-around">
     <!-- Trazilica -->
@@ -90,13 +90,25 @@
   </div>
 
   <!-- Zadaci -->
-  <div class="" ng-repeat="zadatak in zadaci">
-    <h5>
-      {{zadatak.naziv}}
-    </h5>
-    <p>
-      {{zadatak.opis}}
-    </p>
+  <div class="container-fluid">
+    <div class="row">
+      <article class="align-top" ng-repeat="zadatak in zadaci track by $index">
+        <div class="card text-center" style="width: 25rem;">
+          <div class="card-header">
+            {{zadatak.kreator}}
+          </div>
+          <div class="card-body">
+            <h5 class="card-title">{{zadaci.naziv}}</h5>
+            <p class="card-text">
+              {{zadatak.opis}}
+            </p>
+          </div>
+          <div class="card-footer">
+            <a href="#" class="btn btn-primary">Otvori</a>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
 </div>
 

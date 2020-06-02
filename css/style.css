@@ -91,6 +91,9 @@
   padding-left: 0;
   padding-right: 0 !important;
 }
+.custom-control-label {
+  font-size: 15px;
+}
 
 /* -------------------------------------------------------------------------------------------------------   */
 /* ------------------------------------------------------------------------------------------------------- Mainly moji_zadaci.html  */
@@ -121,4 +124,12 @@
 
 .noviZadatak p {
   font-size: 20px;
+}
+
+.zadaciContainer {
+  background-color: lightgreen;
+}
+.card {
+  margin-left: 74px;
+  margin-bottom: 20px;
 }

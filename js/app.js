@@ -1,5 +1,7 @@
 var oModul = angular.module("app", ["ngRoute"]);
 
+// Rute
+
 oModul.config(function ($routeProvider) {
   $routeProvider.when("/", {
     templateUrl: "templates/login.html",
@@ -21,6 +23,8 @@ oModul.config(function ($routeProvider) {
     template: "Došlo je do pogreške",
   });
 });
+
+// Kontroler
 
 oModul.controller("glavniController", function (
   $scope,
@@ -48,6 +52,8 @@ oModul.controller("glavniController", function (
       );
   };
 
+  // Prijava
+
   $scope.Prijava = function () {
     var oData = {
       action_id: "login",
@@ -69,6 +75,8 @@ oModul.controller("glavniController", function (
       }
     );
   };
+
+  // Registracija
 
   $scope.Registracija = function () {
     $scope.alertMsg = true;
@@ -119,6 +127,8 @@ oModul.controller("glavniController", function (
     $scope.alertMsg = false;
   }
 
+  // Odjava
+
   $scope.Odjava = function () {
     var oData = {
       action_id: "logout",
@@ -134,6 +144,8 @@ oModul.controller("glavniController", function (
       }
     );
   };
+
+  // Rad sa modalom za registraciju
 
   $scope.openModal = function () {
     var modal_popup = angular.element("#modalSignUp");
@@ -153,17 +165,19 @@ oModul.controller("glavniController", function (
     $scope.alertMsg = false;
   };
 
-  // dovati fino sve zadatke
-  $scope.dohvatiZadatke = function () {
+  // Dohvacanje mojih zadataka
+
+  $scope.dohvatiMojeZadatke = function () {
     $http({
       method: "GET",
       url: "json.php?json_id=dohvati_zadatke",
     }).then(
       function (response) {
+        console.log(response.data);
         $scope.zadaci = response.data;
       },
-      function (response) {
-        console.log("error");
+      function (error) {
+        console.log(error);
       }
     );
   };

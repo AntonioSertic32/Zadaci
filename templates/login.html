@@ -155,12 +155,26 @@
           <div class="form-group">
             <label for="exampleInputPassword1">Lozinka</label>
             <input
-              type="password"
+              type="{{showPassword?'text':'password'}}"
               class="form-control"
               id="exampleInputPassword1"
               placeholder="Lozinka"
               ng-model="regLozinka"
             />
+            <div class="custom-control custom-checkbox mb-2 mt-2">
+              <input
+                type="checkbox"
+                class="custom-control-input"
+                id="customCheck"
+                name="example1"
+                title="Show Password"
+                ng-model="showPassword"
+                ng-checked="showPassword"
+              />
+              <label class="custom-control-label" for="customCheck"
+                >Prikaži lozinku</label
+              >
+            </div>
           </div>
           <!--
           <fieldset class="form-group">
