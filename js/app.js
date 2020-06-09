@@ -30,7 +30,8 @@ oModul.controller("glavniController", function (
   $scope,
   $http,
   $location,
-  $timeout
+  $timeout,
+  $rootScope
 ) {
   $scope.CheckLoggedIn = function () {
     $http
@@ -41,6 +42,8 @@ oModul.controller("glavniController", function (
         function (response) {
           if (response.data.status == 1) {
             $scope.loggedin = true;
+            $rootScope.korisnik = response.data.user_id;
+            $scope.logiran = response.data.user_id;
           } else {
             $scope.loggedin = false;
             $location.path("/");
@@ -65,6 +68,8 @@ oModul.controller("glavniController", function (
         if (response.data.status == 1) {
           $scope.closeModal();
           $scope.loggedin = true;
+          $rootScope.korisnik = response.data.user_id;
+          $scope.logiran = response.data.user_id;
           $location.path("/moji_zadaci");
         } else {
           alert("Neispravno korisničko ime i/ili lozinka! Pokušajte ponovno!");
@@ -170,7 +175,8 @@ oModul.controller("glavniController", function (
   $scope.dohvatiMojeZadatke = function () {
     $http({
       method: "GET",
-      url: "json.php?json_id=dohvati_zadatke",
+      url:
+        "json.php?json_id=dohvati_zadatke&korisnik_id=" + $rootScope.korisnik,
     }).then(
       function (response) {
         console.log(response.data);

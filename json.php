@@ -3,16 +3,21 @@ header('Content-type: charset=ISO-8859-1');
 include "connection.php";
 
 $sJsonID = "";
+$sUserID = "";
 
 if (isset($_GET['json_id'])) {
     $sJsonID = $_GET['json_id'];
+}
+if (isset($_GET['korisnik_id'])) {
+    $sUserID = $_GET['korisnik_id'];
 }
 
 $oJson = array();
 switch ($sJsonID) {
     case 'dohvati_zadatke':
         /* SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelji, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelji=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id*/
-        $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelji, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelji=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id";
+        $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelji, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelji=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id WHERE zadatak.izvrsitelji=$sUserID";
+        
         $oRecord = $oConnection->query($sQuery);
         while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
             $oZadaci = new Zadatak(
