@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS `zadaci`.`zadatak` (
   `naziv` VARCHAR(45) NOT NULL,
   `datum_pocetka` VARCHAR(50) NOT NULL,
   `datum_zavrsetka` VARCHAR(50) NOT NULL,
-  `izvrsitelji` INT NOT NULL,
+  `izvrsitelj` INT NOT NULL,
   `kreator` INT NOT NULL,
   `stanje` INT NOT NULL,
   `opis` TEXT NOT NULL,
