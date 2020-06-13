@@ -46,7 +46,9 @@
         class="dropdown-menu dropdown-menu-right text-center"
         aria-labelledby="dropdownMenuButton"
       >
-        <a class="dropdown-item" href="">Moj profil</a>
+        <a class="dropdown-item" href="#!user">Moj profil</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#!postavke">Postavke</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="" ng-click="Odjava()">Odjava</a>
       </div>
@@ -60,11 +62,20 @@
     <!-- Trazilica -->
     <div class="d-inline-block form-group has-search w-40">
       <span class="fa fa-search form-control-feedback"></span>
-      <input type="text" class="form-control" placeholder="Pretraži.." />
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Pretraži.."
+        ng-model="inputTekst"
+      />
     </div>
     <!-- Novi zadatak -->
     <div class="noviZadatak">
-      <button type="d-inline-block button" class="btn btn-dark">
+      <button
+        type="d-inline-block button"
+        class="btn btn-dark"
+        ng-click="ModalNoviZadatak()"
+      >
         <i class="fa fa-thumb-tack fa-lg"></i>
       </button>
       <p class="d-inline-block">Novi zadatak</p>
@@ -92,19 +103,51 @@
   <!-- Zadaci -->
   <div class="container-fluid">
     <div class="row">
-      <article class="align-top" ng-repeat="zadatak in zadaci track by $index">
-        <div class="card text-center" style="width: 25rem;">
-          <div class="card-header">
-            {{zadatak.kreator}}
-          </div>
+      <article
+        class="align-top"
+        ng-repeat="zadatak in zadaci | filter: inputTekst "
+      >
+        <div class="card text-center" style="width: 25rem; height: 300px;">
           <div class="card-body">
-            <h5 class="card-title">{{zadaci.naziv}}</h5>
-            <p class="card-text">
-              {{zadatak.opis}}
-            </p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="btn btn-primary">Otvori</a>
+            <div class="row justify-content-start" style="height: 50px;">
+              <div class="col-3 zadatak_kreator">
+                {{zadatak.kreator}}
+              </div>
+              <div class="col-6 align-self-center">
+                <h5 class="zadatak_naziv">
+                  {{zadatak.naziv}}
+                </h5>
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-10 zadatak_datumi">
+                {{zadatak.datum_pocetka}}
+                <!--<i class="fa fa-hand-o-right" aria-hidden="true"></i>-->
+                <i class="fa fa-arrow-right datum_arrow" aria-hidden="true"></i>
+                {{zadatak.datum_zavrsetka}}
+              </div>
+            </div>
+
+            <div class="row justify-content-start">
+              <div class="col-4">
+                Detalji:
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-10 zadatak_opis">
+                {{zadatak.opis | strLimit: 110 }}
+              </div>
+            </div>
+
+            <div class="row justify-content-end">
+              <div class="col-3 zadatak_button">
+                <a href="#!pregled_zadatka" class="btn btn-dark">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
       </article>
@@ -127,3 +170,106 @@
     </div>
   </div>
 </footer>
+
+<!-- Modal novi zadatak -->
+<div class="modal fade" id="modalNoviZadatak">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">Novi zadatak</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div
+          class="alert {{alertClass}} alert-dismissible text-center"
+          ng-show="alertMsg"
+        >
+          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
+            >&times;</a
+          >{{alertMessage}}
+        </div>
+
+        <div
+          class="alert alert-danger alert-dismissible text-center"
+          ng-show="myForm.input.$error.email"
+        >
+          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
+            >&times;</a
+          >Not valid email!
+        </div>
+
+        <form name="NoviZadatakForm" method="POST">
+          <div class="form-group">
+            <label for="inputNaziv">Naziv</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputNaziv"
+              placeholder="Naziv"
+              ng-model="regNaziv"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputDatumPocetka">Datum početka</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputDatumPocetka"
+              placeholder="6/2/2020"
+              ng-model="regDatumPocetka"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputDatumZavrsetka">Datum završetka</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputDatumZavrsetka"
+              aria-describedby="emailHelp"
+              placeholder="7/2/2020"
+              ng-model="regDatumZavrsetka"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputIzvrsitelj">Izvršitelj</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputIzvrsitelj"
+              placeholder="Izvrsitelj"
+              ng-model="regIzvrsitelj"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputOpis">Opis</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputOpis"
+              placeholder="Opis"
+              ng-model="regOpis"
+            />
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" ng-click="NoviZadatak()" class="btn btn-dark">
+          Dodaj
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

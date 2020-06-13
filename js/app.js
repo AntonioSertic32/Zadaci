@@ -19,6 +19,18 @@ oModul.config(function ($routeProvider) {
     templateUrl: "templates/kalendar.html",
     controller: "glavniController",
   });
+  $routeProvider.when("/user", {
+    templateUrl: "templates/user.html",
+    controller: "glavniController",
+  });
+  $routeProvider.when("/postavke", {
+    templateUrl: "templates/postavke.html",
+    controller: "glavniController",
+  });
+  $routeProvider.when("/pregled_zadatka", {
+    templateUrl: "templates/pregled_zadatka.html",
+    controller: "glavniController",
+  });
   $routeProvider.otherwise({
     template: "Došlo je do pogreške",
   });
@@ -31,7 +43,8 @@ oModul.controller("glavniController", function (
   $http,
   $location,
   $timeout,
-  $rootScope
+  $rootScope,
+  $timeout
 ) {
   $scope.CheckLoggedIn = function () {
     $http
@@ -43,7 +56,7 @@ oModul.controller("glavniController", function (
           if (response.data.status == 1) {
             $scope.loggedin = true;
             $rootScope.korisnik = response.data.user_id;
-            $scope.logiran = response.data.user_id;
+            $scope.logiran = response.data.user_username;
           } else {
             $scope.loggedin = false;
             $location.path("/");
@@ -66,10 +79,9 @@ oModul.controller("glavniController", function (
     $http.post("action.php", oData).then(
       function (response) {
         if (response.data.status == 1) {
-          $scope.closeModal();
           $scope.loggedin = true;
           $rootScope.korisnik = response.data.user_id;
-          $scope.logiran = response.data.user_id;
+          $scope.logiran = response.data.user_username;
           $location.path("/moji_zadaci");
         } else {
           alert("Neispravno korisničko ime i/ili lozinka! Pokušajte ponovno!");
@@ -157,11 +169,6 @@ oModul.controller("glavniController", function (
     modal_popup.modal("show");
   };
 
-  $scope.closeModal = function () {
-    var modal_popup = angular.element("#modalSignUp");
-    modal_popup.modal("hide");
-  };
-
   $scope.modalRegistracija = function () {
     $scope.openModal();
   };
@@ -170,21 +177,89 @@ oModul.controller("glavniController", function (
     $scope.alertMsg = false;
   };
 
+  // Modal za novi zadatak
+
+  $scope.openModalNoviZadatak = function () {
+    var modal_popup = angular.element("#modalNoviZadatak");
+    modal_popup.modal("show");
+  };
+
+  $scope.ModalNoviZadatak = function () {
+    $scope.openModalNoviZadatak();
+  };
+
+  // Novi zadatak
+
+  $scope.NoviZadatak = function () {
+    var oData = {
+      action_id: "novi_zadatak",
+      naziv: $scope.regNaziv,
+      datum_pocetka: $scope.regDatumPocetka,
+      datum_zavrsetka: $scope.regDatumZavrsetka,
+      izvrsitelj: $scope.regIzvrsitelj,
+      kreator: $rootScope.korisnik,
+      opis: $scope.regOpis,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno dodan novi zadatak!");
+      } else {
+        $scope.alertMessage = response.data;
+      }
+    });
+  };
+
   // Dohvacanje mojih zadataka
 
   $scope.dohvatiMojeZadatke = function () {
-    $http({
-      method: "GET",
-      url:
-        "json.php?json_id=dohvati_zadatke&korisnik_id=" + $rootScope.korisnik,
-    }).then(
-      function (response) {
-        console.log(response.data);
-        $scope.zadaci = response.data;
-      },
-      function (error) {
-        console.log(error);
-      }
-    );
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url:
+          "json.php?korisnik_id=" +
+          $rootScope.korisnik +
+          "&json_id=dohvati_moje_zadatke",
+      }).then(
+        function (response) {
+          $scope.zadaci = response.data;
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 500);
+  };
+
+  $scope.dohvatiKreiraneZadatke = function () {
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url:
+          "json.php?korisnik_id=" +
+          $rootScope.korisnik +
+          "&json_id=dohvati_kreirane_zadatke",
+      }).then(
+        function (response) {
+          $scope.zadaci = response.data;
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 500);
   };
 });
+
+oModul.filter("strLimit", [
+  "$filter",
+  function ($filter) {
+    return function (input, limit) {
+      if (!input) return;
+      if (input.length <= limit) {
+        return input;
+      }
+
+      return $filter("limitTo")(input, limit) + "...";
+    };
+  },
+]);

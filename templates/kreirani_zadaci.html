@@ -38,13 +38,15 @@
         aria-haspopup="true"
         aria-expanded="false"
       >
-        A
+        {{logiran}}
       </button>
       <div
         class="dropdown-menu dropdown-menu-right text-center"
         aria-labelledby="dropdownMenuButton"
       >
-        <a class="dropdown-item" href="">Moj profil</a>
+        <a class="dropdown-item" href="#!user">Moj profil</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#!postavke">Postavke</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="" ng-click="Odjava()">Odjava</a>
       </div>
@@ -52,7 +54,7 @@
   </div>
 </nav>
 
-<div class="sredinaUser" ng-init="dohvatiZadatke()">
+<div class="sredinaUser" ng-init="dohvatiKreiraneZadatke()">
   <!-- Izbornik -->
   <div class="izbornikKreirani d-flex justify-content-sm-around">
     <!-- Trazilica -->
@@ -80,15 +82,64 @@
     </div>
   </div>
 
+  
   <!-- Zadaci -->
-  <div class="" ng-repeat="zadatak in zadaci">
-    <h5>
-      {{zadatak.naziv}}
-    </h5>
-    <p>
-      {{zadatak.opis}}
-    </p>
+  <div class="container-fluid">
+    <div class="row">
+      <article
+        class="align-top"
+        ng-repeat="zadatak in zadaci | filter: inputTekst "
+      >
+        <div class="card text-center" style="width: 25rem; height: 320px;">
+          <div class="card-body">
+            <div class="row justify-content-center" style="height: 50px;">
+              <div class="col-6 align-self-center">
+                <h5 class="zadatak_naziv">
+                  {{zadatak.naziv}}
+                </h5>
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-10 zadatak_datumi">
+                {{zadatak.datum_pocetka}}
+                <!--<i class="fa fa-hand-o-right" aria-hidden="true"></i>-->
+                <i class="fa fa-arrow-right datum_arrow" aria-hidden="true"></i>
+                {{zadatak.datum_zavrsetka}}
+              </div>
+            </div>
+
+            <div class="row justify-content-start">
+              <div class="col-4">
+                Detalji:
+              </div>
+            </div>
+
+            <div class="row justify-content-center">
+              <div class="col-10 zadatak_opis">
+                {{zadatak.opis | strLimit: 110 }}
+              </div>
+            </div>
+
+            <div class="row justify-content-start">
+              <div class="col-6 zadatak_izvrsitelj">
+                Izvrsitelj: {{zadatak.izvrsitelj}}
+              </div>
+            </div>
+
+            <div class="row justify-content-end">
+              <div class="col-3">
+                <a href="#!pregled_zadatka" class="btn btn-dark">
+                  <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
   </div>
+</div>
 </div>
 
 <!-- FOOTER -->

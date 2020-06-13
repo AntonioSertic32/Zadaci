@@ -126,10 +126,47 @@
   font-size: 20px;
 }
 
-.zadaciContainer {
-  background-color: lightgreen;
-}
 .card {
-  margin-left: 74px;
+  margin-left: 60px;
   margin-bottom: 20px;
+  background-color: #baf4a5;
+  border: 1px solid #3f613d;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 0px rgba(71, 71, 71, 1);
+}
+
+.zadatak_kreator {
+  font-weight: 700;
+}
+
+.zadatak_naziv {
+  font-size: 25px;
+  text-shadow: 1.5px 1.5px 2px #474747;
+}
+
+.zadatak_datumi {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 14px;
+}
+.datum_arrow {
+  margin: 0 5px;
+}
+
+.zadatak_opis {
+  border: 1px solid black;
+  margin-top: 5px;
+  border-radius: 5px;
+  padding: 10px;
+  height: 90px;
+  background-color: white;
+  overflow: hidden;
+}
+
+.zadatak_izvrsitelj {
+  margin-top: 10px;
+}
+
+.zadatak_button {
+  margin-top: 15px;
 }

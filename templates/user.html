@@ -1,0 +1,75 @@
+<!-- NAVIGACIJA -->
+<nav
+  class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top"
+  ng-init="CheckLoggedIn();"
+>
+  <a class="navbar-brand" href="">Avoca To-Do!</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="#!moji_zadaci">Moji zadaci</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#!kreirani_zadaci">Kreirani zadaci</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#!kalendar">Kalendar</a>
+      </li>
+    </ul>
+
+    <div class="dropdown">
+      <button
+        class="btn btn-warning dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {{logiran}}
+      </button>
+      <div
+        class="dropdown-menu dropdown-menu-right text-center"
+        aria-labelledby="dropdownMenuButton"
+      >
+        <a class="dropdown-item" href="#!user">Moj profil</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#!postavke">Postavke</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="" ng-click="Odjava()">Odjava</a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<div class="sredinaUser" ng-init="dohvatiMojeZadatke()">
+  <h1>user.html</h1>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-copyright">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          <p>
+            Copyright Avoca To-Do! © 2020.
+            <span class="novired">All rights reserved.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>

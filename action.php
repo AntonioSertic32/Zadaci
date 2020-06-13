@@ -1,5 +1,5 @@
 <?php
-include "connection.php";
+include "upravljanje_zadacima.php";
 session_start();
 
 $sPostData = file_get_contents("php://input");
@@ -7,42 +7,27 @@ $oPostData = json_decode($sPostData);
 
 $sAction = $oPostData->action_id;
 
+
 switch($sAction)
 {
     case 'check_logged_in':
-        if (isset($_SESSION['user_id'])) {
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> CheckLoggedIn();
 
-            echo json_encode(array(
-                "status" => 1,
-                "user_id" => $_SESSION['user_id']
-            ));
-        } else {
-            echo json_encode(array(
-                "status" => 0,
-            ));
-        }
+        echo $status;
+
         break;
 
     case 'login':
         $Email = $oPostData->email;
         $Password = $oPostData->password;
 
-        $sQuery = "SELECT * FROM korisnik WHERE email='$Email' AND lozinka='$Password'";
-        $oRecord = $oConnection->query($sQuery);
-        $row = $oRecord->fetch();
-        $count = $oRecord->rowCount();
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Login($Email, $Password);
 
-        if ($count > 0) {
-            $_SESSION['user_id'] = $row['id'];
-            echo json_encode(array(
-                "status" => 1,
-                "user_id" => $_SESSION['user_id']
-            ));
-        } else {
-            echo json_encode(array(
-                "status" => 0,
-            ));
-        }
+        echo $status;
+
         break;
 
     case 'registracija':
@@ -53,47 +38,34 @@ switch($sAction)
 		$Lozinka = $oPostData->lozinka;
         $KorisnickoIme = $oPostData->korisnickoIme;
         
-        $sQueryOne = "SELECT email FROM korisnik WHERE email='$Email'";
-        $oRecord = $oConnection->query($sQueryOne);
-        $row = $oRecord->fetch();
-        $count = $oRecord->rowCount();
-        if ($count > 0) {
-            echo "Već postoji korisnik s tim Email-om!";
-        }
-        else {
-            $sQueryTwo= "SELECT korisnicko_ime FROM korisnik WHERE korisnicko_ime='$KorisnickoIme'";
-            $oRecord = $oConnection->query($sQueryTwo);
-            $row = $oRecord->fetch();
-            $count = $oRecord->rowCount();
-            if ($count > 0) {
-                echo "Već postoji korisnik s tim Korisničkim imenom!";
-            }
-            else {
-                $sQuery = "INSERT INTO korisnik (id, ime, prezime, lozinka, email, korisnicko_ime) VALUES (NULL, :Ime, :Prezime, :Lozinka, :Email, :KorisnickoIme)";
-                $oData = array(
-                    'Ime' => $Ime,
-                    'Prezime' => $Prezime,
-                    'Email' => $Email,
-                    'Lozinka' => $Lozinka,
-                    'KorisnickoIme' => $KorisnickoIme,
-                );
-                try
-                {
-                    $oStatement = $oConnection->prepare($sQuery);
-                    $oStatement->execute($oData);
-                    echo 1;
-                } catch (PDOException $error) {
-                    echo $error;
-                    echo 0;
-                }
-            }
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Registracija($Ime, $Prezime, $Email, $Lozinka, $KorisnickoIme);
 
-        }
+        echo $status;
+
     break;
 
 	case 'logout':
 		session_destroy();
-	break;
+    break;
+    
+    case 'novi_zadatak':
+
+		$Naziv = $oPostData->naziv;
+		$Datum_pocetka = $oPostData->datum_pocetka;
+		$Datum_zavrsetka = $oPostData->datum_zavrsetka;
+		$Izvrsitelj = $oPostData->izvrsitelj;
+        $Kreator = $oPostData->kreator;
+        $Opis = $oPostData->opis;
+        
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> NoviZadatak($Naziv, $Datum_pocetka, $Datum_zavrsetka, $Izvrsitelj, $Kreator, $Opis);
+
+        echo $status;
+
+    break;
 
 }
 
