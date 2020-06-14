@@ -44,7 +44,8 @@ oModul.controller("glavniController", function (
   $location,
   $timeout,
   $rootScope,
-  $timeout
+  $timeout,
+  $window
 ) {
   $scope.CheckLoggedIn = function () {
     $http
@@ -230,6 +231,8 @@ oModul.controller("glavniController", function (
     }, 500);
   };
 
+  // Dohvacanje kreiranih zadataka
+
   $scope.dohvatiKreiraneZadatke = function () {
     $timeout(function () {
       $http({
@@ -247,6 +250,25 @@ oModul.controller("glavniController", function (
         }
       );
     }, 500);
+  };
+
+  // Otvaranje zasebnog zadatka
+
+  $scope.OtvoriZasebniZadatak = function (oZadatak) {
+    localStorage.setItem("zadatak", JSON.stringify(oZadatak));
+
+    $location.path("/pregled_zadatka");
+  };
+
+  $scope.PrikaziZasebniZadatak = function () {
+    $scope.zadatak = JSON.parse(localStorage.getItem("zadatak"));
+    $scope.zadatak_naziv = $scope.zadatak.naziv;
+    $scope.zadatak_datum_pocetka = $scope.zadatak.datum_pocetka;
+    $scope.zadatak_datum_zavrsetka = $scope.zadatak.datum_zavrsetka;
+    $scope.zadatak_izvrsitelj = $scope.zadatak.izvrsitelj;
+    $scope.zadatak_kreator = $scope.zadatak.kreator;
+    $scope.zadatak_stanje = $scope.zadatak.stanje;
+    $scope.zadatak_opis = $scope.zadatak.opis;
   };
 });
 
