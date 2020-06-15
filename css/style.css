@@ -2,6 +2,11 @@
   font-family: "DM Sans", sans-serif;
 }
 
+a {
+  color: black;
+  text-decoration: none !important;
+}
+
 .sredinaPocetna {
   height: calc(100vh - 34.4px);
   margin: 0;
@@ -169,4 +174,37 @@
 
 .zadatak_button {
   margin-top: 15px;
+}
+
+/* user.html */
+
+.container-big {
+  width: 750px;
+  margin: 0 auto;
+  margin-top: 100px;
+  /*background-color: coral;*/
+  height: 500px;
+}
+.container-small {
+  width: 500px;
+  float: right;
+}
+.container-small p {
+  font-size: 20px;
+}
+.container-small span {
+  font-weight: 700;
+}
+.picture {
+  display: inline-block;
+  width: 200px;
+  height: 250px;
+}
+.picture p {
+  font-size: 30px;
+  margin-top: 10px;
+}
+.picture .slika {
+  width: 200px;
+  height: 200px;
 }

@@ -11,6 +11,9 @@ if (isset($_GET['json_id'])) {
 if (isset($_GET['korisnik_id'])) {
     $userId = $_GET['korisnik_id'];
 }
+if (isset($_GET['korisnik_username'])) {
+    $username = $_GET['korisnik_username'];
+}
 
 switch ($sJsonID) {
     case 'dohvati_moje_zadatke':
@@ -27,6 +30,22 @@ switch ($sJsonID) {
         $upravljanjeZadacima -> DohvatiKreiraneZadatke();
         echo $upravljanjeZadacima -> IspisiZadatke();
 
+    break;
+
+    case 'dohvati_korisnika':
+
+        $upravljanjeZadacima = new UpravljanjeZadacima($userId);
+        $upravljanjeZadacima -> DohvatiKorisnika();
+        echo $upravljanjeZadacima -> IspisiKorisnika();
+        
+    break;
+
+    case 'dohvati_id_drugog_korisnika':
+
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $upravljanjeZadacima -> DohvatiDrugogKorisnika($username);
+        echo $upravljanjeZadacima -> IspisiKorisnika();
+        
     break;
 
     case 'dohvati_korisnike':

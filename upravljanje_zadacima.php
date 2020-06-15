@@ -137,6 +137,7 @@ class UpravljanjeZadacima {
     }
 
     //Dohvacanje korisnika
+    /*
     public function DohvatiKorisnike()
     {
         $sQuery = "SELECT * FROM korisnik";
@@ -153,6 +154,7 @@ class UpravljanjeZadacima {
             array_push($this->korisnici, $oKorisnik);
         }
     }
+    */
 
     //Dohvacanje mojih zadataka
     public function DohvatiMojeZadatke()
@@ -216,6 +218,57 @@ class UpravljanjeZadacima {
     {
         header('Content-type: charset=ISO-8859-1');
         return json_encode($this->zadaci);
+    }
+
+    // Dohvacanje korisnika
+    public function DohvatiKorisnika() {
+        
+        $sQuery = "SELECT * FROM korisnik WHERE korisnik.id = $this->userId";
+        $oRecord = $this->connection->query($sQuery);
+        while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
+            $oKorisnik = new Korisnik(
+                $oRow['id'],
+                $oRow['ime'],
+                $oRow['prezime'],
+                $oRow['lozinka'],
+                $oRow['email'],
+                $oRow['korisnicko_ime'],
+                $oRow['slika'],
+                $oRow['tel'],
+                $oRow['bio'],
+                $oRow['prebivaliste'],
+                $oRow['datum_rodenja'],
+                $oRow['spol']
+            );
+            array_push($this->korisnici, $oKorisnik);
+        }
+    }
+    public function IspisiKorisnika() {
+        header('Content-type: charset=ISO-8859-1');
+        return json_encode($this->korisnici);
+    }
+
+    public function DohvatiDrugogKorisnika($username) {
+        
+        $sQuery = "SELECT * FROM korisnik WHERE korisnicko_ime = '$username'";
+        $oRecord = $this->connection->query($sQuery);
+        while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
+            $oKorisnik = new Korisnik(
+                $oRow['id'],
+                $oRow['ime'],
+                $oRow['prezime'],
+                $oRow['lozinka'],
+                $oRow['email'],
+                $oRow['korisnicko_ime'],
+                $oRow['slika'],
+                $oRow['tel'],
+                $oRow['bio'],
+                $oRow['prebivaliste'],
+                $oRow['datum_rodenja'],
+                $oRow['spol']
+            );
+            array_push($this->korisnici, $oKorisnik);
+        }
     }
 }
 

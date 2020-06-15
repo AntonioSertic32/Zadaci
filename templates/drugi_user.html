@@ -54,8 +54,8 @@
   </div>
 </nav>
 
-<div class="sredinaUser" ng-init="PrikaziUserProfile()">
-  <div class="container-big" ng-repeat="info in korisnik_info">
+<div class="sredinaUser" ng-init="PrikaziDrugiUserProfile()">
+  <div class="container-big" ng-repeat="info in drugi_korisnik">
     <div class="picture">
       <img
         class="slika"
@@ -95,13 +95,6 @@
         <div class="form-group">
           <p for="exampleInputEmail1"><span>Spol:</span> {{info.spol}}</p>
         </div>
-        <!--
-        <div>
-          <button class="btn btn-dark" ng-click="">
-            <i class="fa fa-pencil fa-lg"></i>
-          </button>
-        </div>
-        -->
       </form>
     </div>
   </div>
