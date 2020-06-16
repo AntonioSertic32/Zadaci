@@ -54,8 +54,87 @@
   </div>
 </nav>
 
-<div class="sredinaUser" ng-init="dohvatiMojeZadatke()">
-  <h1>postavke.html</h1>
+<div class="sredinaUser" ng-init="PrikaziUserProfile()">
+  <div class="container-small-postavke" ng-repeat="info in korisnik_info">
+    <div class="change_avatar">
+      <div class="addpicture">
+        <img
+          class="slika"
+          src="http://localhost/Zadaci(FromBeginning)/assets/img/{{info.slika}}"
+          alt="avatar icon"
+        />
+      </div>
+      <button class="btn btn-dark" ng-click="">
+        <i class="fa fa-camera-retro fa-lg" aria-hidden="true"></i>
+      </button>
+    </div>
+    <form>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Korisničko ime:</span> {{info.korisnicko_ime}}
+        </p>
+      </div>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Ime:</span> {{info.ime}}
+        </p>
+      </div>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Prezime:</span> {{info.prezime}}
+        </p>
+      </div>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Email:</span> {{info.email}}
+        </p>
+      </div>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Telefon:</span> {{info.tel}}
+        </p>
+      </div>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Biografija:</span>
+        </p>
+        <p class="postavke-bio">{{info.bio}}</p>
+      </div>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Prebivalište:</span> {{info.prebivaliste}}
+        </p>
+      </div>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Datum rođenja:</span> {{info.datum_rodenja}}
+        </p>
+      </div>
+      <div class="form-group">
+        <p>
+          <button class="btn btn-dark" ng-click="">
+            <i class="fa fa-pencil fa-lg"></i></button
+          ><span>Spol:</span> {{info.spol}}
+        </p>
+      </div>
+    </form>
+  </div>
 </div>
 
 <!-- FOOTER -->

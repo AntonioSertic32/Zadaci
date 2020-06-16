@@ -107,19 +107,12 @@
         class="align-top"
         ng-repeat="zadatak in zadaci | filter: inputTekst "
       >
-        <div class="card text-center" style="width: 25rem; height: 300px;">
+        <div class="card text-center" style="width: 25rem; height: 335px;">
           <div class="card-body">
-            <div class="row justify-content-start" style="height: 50px;">
-              <div class="col-3 zadatak_kreator">
-                <a href="" ng-click="DohvatiDrugogKorisnika(zadatak.kreator)"
-                  >{{zadatak.kreator}}</a
-                >
-              </div>
-              <div class="col-6 align-self-center">
-                <h5 class="zadatak_naziv">
-                  {{zadatak.naziv}}
-                </h5>
-              </div>
+            <div class="d-flex justify-content-center">
+              <h5 class="zadatak_naziv text-center">
+                {{zadatak.naziv}}
+              </h5>
             </div>
 
             <div class="row justify-content-center">
@@ -132,7 +125,16 @@
             </div>
 
             <div class="row justify-content-start">
-              <div class="col-4">
+              <div class="zadatak_kreator">
+                Kreator:
+                <a href="" ng-click="DohvatiDrugogKorisnika(zadatak.kreator)"
+                  >{{zadatak.kreator}}</a
+                >
+              </div>
+            </div>
+
+            <div class="row justify-content-start">
+              <div class="detalji" style="font-weight: 700;">
                 Detalji:
               </div>
             </div>

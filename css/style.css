@@ -3,7 +3,6 @@
 }
 
 a {
-  color: black;
   text-decoration: none !important;
 }
 
@@ -12,7 +11,7 @@ a {
   margin: 0;
 }
 .sredinaUser {
-  height: calc(100vh - 34.4px);
+  min-height: calc(100vh - 34.4px);
   padding-top: 56px;
   margin: 0;
   /*background-color: #a3e08e;*/
@@ -90,6 +89,11 @@ a {
   font-size: 15px;
 }
 
+.footer {
+  position: absolute;
+  width: 100%;
+}
+
 /* ------------------------------------------------------------------------------------------------------- Modal  */
 
 .modal {
@@ -132,16 +136,37 @@ a {
 }
 
 .card {
-  margin-left: 60px;
-  margin-bottom: 20px;
+  margin-left: 70px;
+  margin-bottom: 40px;
   background-color: #baf4a5;
-  border: 1px solid #3f613d;
+  border: 1px solid black;
   border-radius: 10px;
   box-shadow: 5px 5px 5px 0px rgba(71, 71, 71, 1);
 }
 
 .zadatak_kreator {
   font-weight: 700;
+  margin-left: 40px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.zadatak_izvrsitelj {
+  font-weight: 700;
+  margin-left: 40px;
+  margin-top: 15px;
+}
+.zadatak_kreator a,
+.zadatak_izvrsitelj a {
+  color: #222;
+}
+.zadatak_kreator a:hover,
+.zadatak_izvrsitelj a:hover {
+  color: #3f613d;
+  text-shadow: 2px 2px 1px #e4f3ad;
+}
+
+.detalji {
+  margin-left: 40px;
 }
 
 .zadatak_naziv {
@@ -168,22 +193,20 @@ a {
   overflow: hidden;
 }
 
-.zadatak_izvrsitelj {
-  margin-top: 10px;
-}
-
 .zadatak_button {
   margin-top: 15px;
 }
 
-/* user.html */
+/* -------------------------------------------------------------------------------------------------------   */
+/* ------------------------------------------------------------------------------------------------------- Mainly user.html  */
+/* -------------------------------------------------------------------------------------------------------   */
 
 .container-big {
   width: 750px;
   margin: 0 auto;
   margin-top: 100px;
   /*background-color: coral;*/
-  height: 500px;
+  height: auto;
 }
 .container-small {
   width: 500px;
@@ -207,4 +230,86 @@ a {
 .picture .slika {
   width: 200px;
   height: 200px;
+}
+
+/* -------------------------------------------------------------------------------------------------------   */
+/* ------------------------------------------------------------------------------------------------------- Mainly postavke.html  */
+/* -------------------------------------------------------------------------------------------------------   */
+
+.change_avatar {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 50%;
+}
+.change_avatar button {
+  display: inline-block;
+}
+.addpicture {
+  width: 150px;
+  height: 150px;
+  display: inline-block;
+}
+.addpicture a {
+  color: #222;
+}
+.addpicture .slika {
+  width: 150px;
+  height: 150px;
+}
+
+.container-big-postavke {
+  width: 700px;
+  margin: 0 auto;
+  margin-top: 30px;
+  min-height: 750px;
+}
+.container-small-postavke {
+  width: 570px;
+  margin: 0 auto;
+  margin-top: 30px;
+}
+.container-small-postavke p {
+  font-size: 20px;
+}
+.container-small-postavke span {
+  font-weight: 700;
+}
+.container-small-postavke button {
+  margin-right: 20px;
+}
+
+.postavke-bio {
+  margin-left: 65px;
+}
+
+/* -------------------------------------------------------------------------------------------------------   */
+/* ------------------------------------------------------------------------------------------------------- Mainly pregled_zadatka.html  */
+/* -------------------------------------------------------------------------------------------------------   */
+
+.container-zadatak {
+  width: 850px;
+  margin: 0 auto;
+
+  margin-top: 40px;
+}
+
+.container-zadatak .card {
+  padding: 50px;
+}
+
+.container-zadatak p {
+  font-size: 20px;
+}
+.container-zadatak span {
+  font-weight: 700;
+}
+.komentiranje {
+  margin-bottom: 0;
+  margin-top: 30px;
+}
+
+.pregled_zadatak_naziv {
+  font-size: 35px;
+  text-shadow: 1.5px 1.5px 2px #474747;
+  margin-bottom: 40px;
 }

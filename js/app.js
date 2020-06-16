@@ -31,6 +31,10 @@ oModul.config(function ($routeProvider) {
     templateUrl: "templates/pregled_zadatka.html",
     controller: "glavniController",
   });
+  $routeProvider.when("/pregled_kreiranog_zadatka", {
+    templateUrl: "templates/pregled_kreiranog_zadatka.html",
+    controller: "glavniController",
+  });
   $routeProvider.when("/drugi_user", {
     templateUrl: "templates/drugi_user.html",
     controller: "glavniController",
@@ -329,16 +333,19 @@ oModul.controller("glavniController", function (
 
     $location.path("/pregled_zadatka");
   };
+  $scope.OtvoriZasebniKreiraniZadatak = function (oZadatak) {
+    localStorage.setItem("zadatak", JSON.stringify(oZadatak));
+
+    $location.path("/pregled_kreiranog_zadatka");
+  };
 
   $scope.PrikaziZasebniZadatak = function () {
     $scope.zadatak = JSON.parse(localStorage.getItem("zadatak"));
-    $scope.zadatak_naziv = $scope.zadatak.naziv;
-    $scope.zadatak_datum_pocetka = $scope.zadatak.datum_pocetka;
-    $scope.zadatak_datum_zavrsetka = $scope.zadatak.datum_zavrsetka;
-    $scope.zadatak_izvrsitelj = $scope.zadatak.izvrsitelj;
-    $scope.zadatak_kreator = $scope.zadatak.kreator;
-    $scope.zadatak_stanje = $scope.zadatak.stanje;
-    $scope.zadatak_opis = $scope.zadatak.opis;
+    if ($scope.zadatak.stanje == 0) {
+      $scope.zadatak.stanje = "Nedovršen";
+    } else {
+      $scope.zadatak.stanje = "Dovršen";
+    }
   };
 });
 
