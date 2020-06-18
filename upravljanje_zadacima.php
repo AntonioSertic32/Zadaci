@@ -137,7 +137,7 @@ class UpravljanjeZadacima {
     }
 
     //Dohvacanje korisnika
-    /*
+    
     public function DohvatiKorisnike()
     {
         $sQuery = "SELECT * FROM korisnik";
@@ -154,7 +154,12 @@ class UpravljanjeZadacima {
             array_push($this->korisnici, $oKorisnik);
         }
     }
-    */
+    public function IspisiKorisnike()
+    {
+        header('Content-type: charset=ISO-8859-1');
+        return json_encode($this->korisnici);
+    }
+    
 
     //Dohvacanje mojih zadataka
     public function DohvatiMojeZadatke()

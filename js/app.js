@@ -53,7 +53,8 @@ oModul.controller("glavniController", function (
   $location,
   $timeout,
   $rootScope,
-  $timeout
+  $timeout,
+  $window
 ) {
   $scope.CheckLoggedIn = function () {
     $http
@@ -205,6 +206,12 @@ oModul.controller("glavniController", function (
   $scope.openModalNoviZadatak = function () {
     var modal_popup = angular.element("#modalNoviZadatak");
     modal_popup.modal("show");
+    $scope.regDatumPocetka = new Date();
+    $scope.regDatumZavrsetka = new Date();
+  };
+  $scope.closeModalNoviZadatak = function () {
+    var modal_popup = angular.element("#modalNoviZadatak");
+    modal_popup.modal("hide");
   };
 
   $scope.ModalNoviZadatak = function () {
@@ -266,23 +273,70 @@ oModul.controller("glavniController", function (
   // Novi zadatak
 
   $scope.NoviZadatak = function () {
-    var oData = {
-      action_id: "novi_zadatak",
-      naziv: $scope.regNaziv,
-      datum_pocetka: $scope.regDatumPocetka,
-      datum_zavrsetka: $scope.regDatumZavrsetka,
-      izvrsitelj: $scope.regIzvrsitelj,
-      kreator: $rootScope.korisnik,
-      opis: $scope.regOpis,
-    };
-    $http.post("action.php", oData).then(function (response) {
-      if (response.data == 1) {
-        alert("Uspješno dodan novi zadatak!");
+    $scope.alertMsg = true;
+    if (
+      $scope.regNaziv == undefined ||
+      $scope.regDatumPocetka == undefined ||
+      $scope.regDatumZavrsetka == undefined ||
+      $scope.regIzvrsitelj == undefined ||
+      $scope.regOpis == undefined
+    ) {
+      $scope.alertClass = "alert-danger";
+      $scope.alertMessage = "Sva polja moraju biti popunjena!";
+    } else {
+      if ($scope.regDatumPocetka > $scope.regDatumZavrsetka) {
+        $scope.alertClass = "alert-danger";
+        $scope.alertMessage =
+          "Datum početka ne smije biti veći od datuma završetka!";
       } else {
-        $scope.alertMessage = response.data;
+        // uzeti id od izvrsitelja umjesto korisnickog imena
+        DajIdOdabranogKorisnika($scope.regIzvrsitelj);
+        var oData = {
+          action_id: "novi_zadatak",
+          naziv: $scope.regNaziv,
+          datum_pocetka: $scope.regDatumPocetka,
+          datum_zavrsetka: $scope.regDatumZavrsetka,
+          izvrsitelj: $scope.id_korisnika,
+          kreator: $rootScope.korisnik,
+          opis: $scope.regOpis,
+        };
+        $http.post("action.php", oData).then(function (response) {
+          if (response.data == 1) {
+            $scope.alertClass = "alert-success";
+            $scope.alertMessage = "Uspješno dodan novi zadatak!";
+            $timeout(uspjesnoDodavanje, 1200);
+          } else {
+            $scope.alertMessage = response.data;
+          }
+        });
+      }
+    }
+  };
+  function uspjesnoDodavanje() {
+    $scope.closeModalNoviZadatak();
+    $window.location.reload();
+  }
+  function DajIdOdabranogKorisnika(username) {
+    var key_prev_iteracije;
+    angular.forEach($scope.korisnici, function (value, key) {
+      angular.forEach(value, function (valuetwo, keytwo) {
+        if (keytwo == "korisnicko_ime") {
+          if (valuetwo == username) {
+            key_prev_iteracije = key;
+          }
+        }
+      });
+    });
+    angular.forEach($scope.korisnici, function (value, key) {
+      if (key == key_prev_iteracije) {
+        angular.forEach(value, function (valuetwo, keytwo) {
+          if (keytwo == "id") {
+            $scope.id_korisnika = valuetwo;
+          }
+        });
       }
     });
-  };
+  }
 
   // Dohvacanje mojih zadataka
 
@@ -347,6 +401,49 @@ oModul.controller("glavniController", function (
       $scope.zadatak.stanje = "Dovršen";
     }
   };
+
+  // Dohvacanje korisnika
+
+  $scope.DohvatiKorisnike = function () {
+    var korisnicka_imena = [];
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url: "json.php?json_id=dohvati_korisnike",
+      }).then(
+        function (response) {
+          $scope.korisnici = response.data;
+          //
+          console.log(response.data);
+          //
+          angular.forEach($scope.korisnici, function (value, key) {
+            angular.forEach(value, function (valuetwo, keytwo) {
+              if (keytwo == "korisnicko_ime") {
+                korisnicka_imena.push(valuetwo);
+              }
+            });
+          });
+          $scope.korisnicka_imena = korisnicka_imena;
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 300);
+  };
+
+  // Sortiranje
+
+  $scope.orderProperty = "id";
+  $scope.setOrderProperty = function (propertyName) {
+    if ($scope.orderProperty === propertyName) {
+      $scope.orderProperty = "-" + propertyName;
+    } else if ($scope.orderProperty === "-" + propertyName) {
+      $scope.orderProperty = propertyName;
+    } else {
+      $scope.orderProperty = propertyName;
+    }
+  };
 });
 
 oModul.filter("strLimit", [
@@ -362,3 +459,11 @@ oModul.filter("strLimit", [
     };
   },
 ]);
+
+oModul.filter("promjenaFormata", function () {
+  return function (datum) {
+    datum = datum.replace(/-/g, ".");
+
+    return datum;
+  };
+});

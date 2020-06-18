@@ -93,9 +93,24 @@
         Sortiraj po..
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <a class="dropdown-item" href="#">Something else here</a>
+        <a class="dropdown-item" href="" ng-click="setOrderProperty('naziv')"
+          >Nazivu</a
+        >
+        <a class="dropdown-item" href="" ng-click="setOrderProperty('kreator')"
+          >Kreatoru</a
+        >
+        <a
+          class="dropdown-item"
+          href=""
+          ng-click="setOrderProperty('datum_pocetka')"
+          >Datumu početka</a
+        >
+        <a
+          class="dropdown-item"
+          href=""
+          ng-click="setOrderProperty('datum_zavrsetka')"
+          >Datumu završetka</a
+        >
       </div>
     </div>
   </div>
@@ -105,7 +120,7 @@
     <div class="row">
       <article
         class="align-top"
-        ng-repeat="zadatak in zadaci | filter: inputTekst "
+        ng-repeat="zadatak in zadaci  | orderBy:orderProperty | filter: inputTekst  "
       >
         <div class="card text-center" style="width: 25rem; height: 335px;">
           <div class="card-body">
@@ -117,10 +132,12 @@
 
             <div class="row justify-content-center">
               <div class="col-10 zadatak_datumi">
-                {{zadatak.datum_pocetka}}
+                {{zadatak.datum_pocetka | date: 'dd-MM-yyyy' | promjenaFormata
+                }}
                 <!--<i class="fa fa-hand-o-right" aria-hidden="true"></i>-->
                 <i class="fa fa-arrow-right datum_arrow" aria-hidden="true"></i>
-                {{zadatak.datum_zavrsetka}}
+                {{zadatak.datum_zavrsetka | date: 'dd-MM-yyyy' | promjenaFormata
+                }}
               </div>
             </div>
 
@@ -181,7 +198,7 @@
 
 <!-- Modal novi zadatak -->
 <div class="modal fade" id="modalNoviZadatak">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-lg" ng-init="DohvatiKorisnike()">
     <div class="modal-content">
       <!-- Modal Header -->
       <div class="modal-header">
@@ -201,15 +218,6 @@
           >{{alertMessage}}
         </div>
 
-        <div
-          class="alert alert-danger alert-dismissible text-center"
-          ng-show="myForm.input.$error.email"
-        >
-          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
-            >&times;</a
-          >Not valid email!
-        </div>
-
         <form name="NoviZadatakForm" method="POST">
           <div class="form-group">
             <label for="inputNaziv">Naziv</label>
@@ -225,10 +233,9 @@
           <div class="form-group">
             <label for="inputDatumPocetka">Datum početka</label>
             <input
-              type="text"
+              type="date"
               class="form-control"
               id="inputDatumPocetka"
-              placeholder="6/2/2020"
               ng-model="regDatumPocetka"
             />
           </div>
@@ -236,24 +243,23 @@
           <div class="form-group">
             <label for="inputDatumZavrsetka">Datum završetka</label>
             <input
-              type="text"
+              type="date"
               class="form-control"
               id="inputDatumZavrsetka"
-              aria-describedby="emailHelp"
-              placeholder="7/2/2020"
               ng-model="regDatumZavrsetka"
             />
           </div>
 
           <div class="form-group">
             <label for="inputIzvrsitelj">Izvršitelj</label>
-            <input
-              type="text"
+            <select
               class="form-control"
               id="inputIzvrsitelj"
-              placeholder="Izvrsitelj"
               ng-model="regIzvrsitelj"
-            />
+              style="height: 40px;"
+              ng-options="korisnicko_ime for korisnicko_ime in korisnicka_imena"
+            >
+            </select>
           </div>
 
           <div class="form-group">

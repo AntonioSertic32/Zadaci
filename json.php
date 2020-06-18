@@ -52,6 +52,7 @@ switch ($sJsonID) {
 
         $upravljanjeZadacima = new UpravljanjeZadacima();
         $upravljanjeZadacima -> DohvatiKorisnike();
+        echo $upravljanjeZadacima -> IspisiKorisnike();
         
     break;
 
