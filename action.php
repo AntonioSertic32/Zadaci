@@ -67,6 +67,16 @@ switch($sAction)
 
     break;
 
+    case 'promjeni_spol':
+        $Spol = $oPostData->spol;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Spol($Spol, $UserID);
+
+        echo $status;
+    break;
+
 }
 
 ?>

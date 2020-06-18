@@ -128,7 +128,7 @@
       </div>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniSpol()">
             <i class="fa fa-pencil fa-lg"></i></button
           ><span>Spol:</span> {{info.spol}}
         </p>
@@ -152,3 +152,33 @@
     </div>
   </div>
 </footer>
+
+<!-- Spol -->
+<div class="modal fade" id="promjeni_spol">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">Promjena spola</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form name="NoviZadatakForm" method="POST">
+          <div class="form-group">
+            <p><input name="spol" ng-click="novi_spol('Muško')" type="radio"> Muško</p>
+            <p><input name="spol" ng-click="novi_spol('Žensko')" type="radio"> Žensko</p>
+            <p><input name="spol" ng-click="novi_spol(' ')" type="radio"> Ništa</p>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="SpremiSpol()" class="btn btn-dark">
+          Potvrdi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

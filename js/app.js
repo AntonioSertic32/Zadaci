@@ -232,7 +232,6 @@ oModul.controller("glavniController", function (
       }).then(
         function (response) {
           $scope.korisnik_info = response.data;
-          console.log($scope.korisnik_info);
         },
         function (error) {
           console.log(error);
@@ -413,9 +412,6 @@ oModul.controller("glavniController", function (
       }).then(
         function (response) {
           $scope.korisnici = response.data;
-          //
-          console.log(response.data);
-          //
           angular.forEach($scope.korisnici, function (value, key) {
             angular.forEach(value, function (valuetwo, keytwo) {
               if (keytwo == "korisnicko_ime") {
@@ -442,6 +438,38 @@ oModul.controller("glavniController", function (
       $scope.orderProperty = propertyName;
     } else {
       $scope.orderProperty = propertyName;
+    }
+  };
+
+  // Modali za postavke ------------------------------------------------------------------------------------>>
+
+  // Spol
+  $scope.PromjeniSpol = function () {
+    var modal_popup = angular.element("#promjeni_spol");
+    $scope.new_spol = "";
+    modal_popup.modal("show");
+  };
+  $scope.novi_spol = function (vrijednost) {
+    $scope.new_spol = vrijednost;
+  };
+  $scope.SpremiSpol = function () {
+    if ($scope.new_spol == "") {
+      alert("Niste ništa označili..");
+    } else {
+      var oData = {
+        action_id: "promjeni_spol",
+        spol: $scope.new_spol,
+        user_id: $scope.korisnik_info[0].id,
+      };
+      $http.post("action.php", oData).then(function (response) {
+        if (response.data == 1) {
+          alert("Uspješno promjenjen spol!");
+
+          $window.location.reload();
+        } else {
+          alert(response.data);
+        }
+      });
     }
   };
 });

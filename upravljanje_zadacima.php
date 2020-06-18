@@ -93,13 +93,14 @@ class UpravljanjeZadacima {
                 return "Već postoji korisnik s tim Korisničkim imenom!";
             }
             else {
-                $sQuery = "INSERT INTO korisnik (id, ime, prezime, lozinka, email, korisnicko_ime) VALUES (NULL, :Ime, :Prezime, :Lozinka, :Email, :KorisnickoIme)";
+                $sQuery = "INSERT INTO korisnik (id, ime, prezime, lozinka, email, korisnicko_ime, slika) VALUES (NULL, :Ime, :Prezime, :Lozinka, :Email, :KorisnickoIme, :Slika)";
                 $oData = array(
                     'Ime' => $Ime,
                     'Prezime' => $Prezime,
                     'Email' => $Email,
                     'Lozinka' => $Lozinka,
                     'KorisnickoIme' => $KorisnickoIme,
+                    'Slika' => "doctor.png"
                 );
                 try
                 {
@@ -273,6 +274,22 @@ class UpravljanjeZadacima {
                 $oRow['spol']
             );
             array_push($this->korisnici, $oKorisnik);
+        }
+    }
+
+    public function Spol($Spol, $UserID) {
+        $sQuery = "UPDATE korisnik SET spol = '$Spol' WHERE id = $UserID";
+        $oData = array(
+            'Spol' => $Spol,
+            'UserID' => $UserID
+        );
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
         }
     }
 }
