@@ -75,24 +75,24 @@
         <div class="form-group">
           <p for="exampleInputEmail1"><span>Email:</span> {{info.email}}</p>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="info.tel != null">
           <p for="exampleInputEmail1"><span>Telefon:</span> {{info.tel}}</p>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="info.bio != null">
           <p><span>Biografija:</span></p>
           <p>{{info.bio}}</p>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="info.prebivaliste != null">
           <p for="exampleInputEmail1">
             <span>Prebivalište:</span> {{info.prebivaliste}}
           </p>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="info.datum_rodenja != null">
           <p for="exampleInputEmail1">
             <span>Datum rođenja:</span> {{info.datum_rodenja}}
           </p>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="info.spol != null">
           <p for="exampleInputEmail1"><span>Spol:</span> {{info.spol}}</p>
         </div>
       </form>

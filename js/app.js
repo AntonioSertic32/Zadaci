@@ -232,6 +232,7 @@ oModul.controller("glavniController", function (
       }).then(
         function (response) {
           $scope.korisnik_info = response.data;
+          //console.log($scope.korisnik_info[0].bio);
         },
         function (error) {
           console.log(error);
@@ -618,6 +619,40 @@ oModul.controller("glavniController", function (
 
   // Modali za postavke ------------------------------------------------------------------------------------>>
 
+  // Avatar
+
+  $scope.openModalAvatar = function () {
+    var modal_popup = angular.element("#promjeni_avatar");
+    modal_popup.modal("show");
+    $scope.naziv_zadatka = $scope.zadatak.naziv;
+  };
+  $scope.closeModalAvatar = function () {
+    var modal_popup = angular.element("#promjeni_avatar");
+    modal_popup.modal("hide");
+  };
+  $scope.OdabirAvataraModal = function () {
+    $scope.openModalAvatar();
+  };
+  /*
+  $scope.SpremiAvatara = function () {
+    var oData = {
+      action_id: "dovrsi_zadatak",
+      id: $scope.zadatak.id,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno ste dovršili zadatak!");
+        $scope.closeModalDovrsenZadatak();
+        $timeout(function () {
+          $window.location.reload();
+        }, 500);
+      } else {
+        alert(response.data);
+      }
+    });
+  };
+  */
+
   // Spol
   $scope.PromjeniSpol = function () {
     var modal_popup = angular.element("#promjeni_spol");
@@ -625,6 +660,7 @@ oModul.controller("glavniController", function (
     modal_popup.modal("show");
   };
   $scope.novi_spol = function (vrijednost) {
+    console.log(vrijednost);
     $scope.new_spol = vrijednost;
   };
   $scope.SpremiSpol = function () {

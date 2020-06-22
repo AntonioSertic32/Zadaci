@@ -64,7 +64,7 @@
           alt="avatar icon"
         />
       </div>
-      <button class="btn btn-dark" ng-click="">
+      <button class="btn btn-dark" ng-click="OdabirAvataraModal()">
         <i class="fa fa-camera-retro fa-lg" aria-hidden="true"></i>
       </button>
     </div>
@@ -153,6 +153,98 @@
   </div>
 </footer>
 
+<!-- Avatar -->
+<div class="modal fade" id="promjeni_avatar">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">Promjena avatara</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="container">
+          <div class="d-flex flex-row justify-content-around">
+            <div class="d-flex flex-column">
+              <a class="avatar-link" href=""
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/1.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+              <a href="" class="avatar-link"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/2.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+            </div>
+            <div class="d-flex flex-column">
+              <a href="" class="avatar-link"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/3.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+              <a href="" class="avatar-link"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/4.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+            </div>
+            <div class="d-flex flex-column">
+              <a href="" class="avatar-link"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/5.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+              <a href="" class="avatar-link"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/6.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+            </div>
+            <div class="d-flex flex-column">
+              <a href="" class="avatar-link"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/7.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+              <a href="" class="avatar-link"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/8.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="SpremiAvatara()" class="btn btn-dark">
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- Spol -->
 <div class="modal fade" id="promjeni_spol">
   <div class="modal-dialog">
@@ -166,9 +258,18 @@
       <div class="modal-body">
         <form name="NoviZadatakForm" method="POST">
           <div class="form-group">
-            <p><input name="spol" ng-click="novi_spol('Muško')" type="radio"> Muško</p>
-            <p><input name="spol" ng-click="novi_spol('Žensko')" type="radio"> Žensko</p>
-            <p><input name="spol" ng-click="novi_spol(' ')" type="radio"> Ništa</p>
+            <p>
+              <input name="spol" ng-click="novi_spol('Muško')" type="radio" />
+              Muško
+            </p>
+            <p>
+              <input name="spol" ng-click="novi_spol('Žensko')" type="radio" />
+              Žensko
+            </p>
+            <p>
+              <input name="spol" ng-click="novi_spol(' ')" type="radio" /> Ništa
+            </p>
+          </div>
         </form>
       </div>
       <div class="modal-footer">

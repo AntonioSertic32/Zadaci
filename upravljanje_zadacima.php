@@ -102,7 +102,7 @@ class UpravljanjeZadacima {
                     'Email' => $Email,
                     'Lozinka' => $Lozinka,
                     'KorisnickoIme' => $KorisnickoIme,
-                    'Slika' => "doctor.png"
+                    'Slika' => "default.png"
                 );
                 try
                 {
@@ -280,7 +280,13 @@ class UpravljanjeZadacima {
     }
 
     public function Spol($Spol, $UserID) {
-        $sQuery = "UPDATE korisnik SET spol = '$Spol' WHERE id = $UserID";
+        if($Spol == " ") {
+            
+            $sQuery = "UPDATE korisnik SET spol = null WHERE id = $UserID";
+        }else {
+
+            $sQuery = "UPDATE korisnik SET spol = '$Spol' WHERE id = $UserID";
+        }
         try
         {
             $stmt =$this->connection->prepare($sQuery);
