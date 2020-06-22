@@ -1,13 +1,11 @@
 ﻿<?php
     session_start();
-
-    // https://www.youtube.com/watch?v=sKvENoPCFzg
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Primjer</title>
+    <title>Avoca To-Do!</title>
     <script src="assets/plugins/jquery/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="assets/plugins/bootstrap-4.4.1-dist/css/bootstrap.css">
     <link rel="stylesheet" href="css/style.css">

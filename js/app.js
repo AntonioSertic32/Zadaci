@@ -337,6 +337,133 @@ oModul.controller("glavniController", function (
     });
   }
 
+  // Brisanje zadatka
+
+  $scope.openModalObrsiZadatak = function () {
+    var modal_popup = angular.element("#modalObrsiZadatak");
+    modal_popup.modal("show");
+    $scope.naziv_zadatka = $scope.zadatak.naziv;
+  };
+  $scope.closeModalObrisiZadatak = function () {
+    var modal_popup = angular.element("#modalObrsiZadatak");
+    modal_popup.modal("hide");
+  };
+  $scope.ObrisiZadatakModal = function () {
+    $scope.openModalObrsiZadatak();
+  };
+
+  $scope.ObrisiZadatak = function () {
+    var oData = {
+      action_id: "obrisi_zadatak",
+      id: $scope.zadatak.id,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno ste obrisali zadatak!");
+        $scope.closeModalObrisiZadatak();
+        $timeout(function () {
+          $location.path("/kreirani_zadaci");
+        }, 500);
+      } else {
+        alert(response.data);
+      }
+    });
+  };
+
+  // Uredivanje zadatka
+
+  $scope.openModalUrediZadatak = function () {
+    var modal_popup = angular.element("#modalUrediZadatak");
+    modal_popup.modal("show");
+
+    $scope.edit_id = $scope.zadatak.id;
+    $scope.edit_naziv = $scope.zadatak.naziv;
+    $scope.edit_datum_pocetka = new Date($scope.zadatak.datum_pocetka);
+    $scope.edit_datum_zavrsetka = new Date($scope.zadatak.datum_zavrsetka);
+    $scope.edit_izvrsitelj = $scope.zadatak.izvrsitelj;
+    $scope.edit_opis = $scope.zadatak.opis;
+  };
+  $scope.closeModalUrediZadatak = function () {
+    var modal_popup = angular.element("#modalUrediZadatak");
+    modal_popup.modal("hide");
+  };
+  $scope.UrediZadatakModal = function () {
+    $scope.openModalUrediZadatak();
+  };
+
+  $scope.UrediZadatak = function () {
+    $scope.alertMsg = true;
+    if (
+      $scope.edit_naziv == "" ||
+      $scope.edit_izvrsitelj == "" ||
+      $scope.edit_opis == ""
+    ) {
+      $scope.alertClass = "alert-danger";
+      $scope.alertMessage = "Sva polja moraju biti popunjena!";
+    } else {
+      if ($scope.edit_datum_pocetka > $scope.edit_datum_zavrsetka) {
+        $scope.alertClass = "alert-danger";
+        $scope.alertMessage =
+          "Datum početka ne smije biti veći od datuma završetka!";
+      } else {
+        DajIdOdabranogKorisnika($scope.edit_izvrsitelj);
+        var oData = {
+          action_id: "uredi_zadatak",
+          id: $scope.edit_id,
+          naziv: $scope.edit_naziv,
+          datum_pocetka: $scope.edit_datum_pocetka,
+          datum_zavrsetka: $scope.edit_datum_zavrsetka,
+          izvrsitelj: $scope.id_korisnika,
+          opis: $scope.edit_opis,
+        };
+        $http.post("action.php", oData).then(function (response) {
+          if (response.data == 1) {
+            alert("Uspješno uređen zadatak!");
+            $scope.closeModalUrediZadatak();
+            $timeout(function () {
+              $window.location.reload();
+            }, 500);
+          } else {
+            $scope.alertMessage = response.data;
+          }
+        });
+      }
+    }
+  };
+
+  // Oznacavanje zadatka kao dovrsenog
+
+  $scope.openModalDovrsenZadatak = function () {
+    var modal_popup = angular.element("#modalDovrsenZadatak");
+    modal_popup.modal("show");
+    $scope.naziv_zadatka = $scope.zadatak.naziv;
+  };
+  $scope.closeModalDovrsenZadatak = function () {
+    var modal_popup = angular.element("#modalDovrsenZadatak");
+    modal_popup.modal("hide");
+  };
+  $scope.DovrsenZadatakModal = function () {
+    $scope.openModalDovrsenZadatak();
+  };
+
+  $scope.DovrsiZadatak = function () {
+    var oData = {
+      action_id: "dovrsi_zadatak",
+      id: $scope.zadatak.id,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno ste dovršili zadatak!");
+        $scope.closeModalDovrsenZadatak();
+        $timeout(function () {
+          $window.location.reload();
+        }, 500);
+      } else {
+        alert(response.data);
+      }
+    });
+  };
+
   // Dohvacanje mojih zadataka
 
   $scope.dohvatiMojeZadatke = function () {
@@ -381,24 +508,72 @@ oModul.controller("glavniController", function (
 
   // Otvaranje zasebnog zadatka
 
-  $scope.OtvoriZasebniZadatak = function (oZadatak) {
-    localStorage.setItem("zadatak", JSON.stringify(oZadatak));
+  $scope.OtvoriZasebniZadatak = function (id_zadatka) {
+    localStorage.setItem("zadatak", JSON.stringify(id_zadatka));
 
     $location.path("/pregled_zadatka");
   };
-  $scope.OtvoriZasebniKreiraniZadatak = function (oZadatak) {
-    localStorage.setItem("zadatak", JSON.stringify(oZadatak));
+  $scope.OtvoriZasebniKreiraniZadatak = function (id_zadatka) {
+    localStorage.setItem("zadatak", JSON.stringify(id_zadatka));
 
     $location.path("/pregled_kreiranog_zadatka");
   };
 
+  $scope.PrikaziZasebniKreiraniZadatak = function () {
+    $scope.id_kreiranog_zadatka = JSON.parse(localStorage.getItem("zadatak"));
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url:
+          "json.php?korisnik_id=" +
+          $rootScope.korisnik +
+          "&json_id=dohvati_kreirani_zadatak&zadatak_id=" +
+          $scope.id_kreiranog_zadatka,
+      }).then(
+        function (response) {
+          $scope.zadatak_arr = response.data;
+          $scope.zadatak = $scope.zadatak_arr[0];
+          console.log($scope.zadatak);
+
+          if ($scope.zadatak.stanje == 0) {
+            $scope.zadatak_stanje = "Nedovršen"; // drugi scope staviti kako bi se na stranici mogao napraviti orderBy po stanju..
+          } else {
+            $scope.zadatak_stanje = "Dovršen";
+          }
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 200);
+  };
   $scope.PrikaziZasebniZadatak = function () {
-    $scope.zadatak = JSON.parse(localStorage.getItem("zadatak"));
-    if ($scope.zadatak.stanje == 0) {
-      $scope.zadatak.stanje = "Nedovršen";
-    } else {
-      $scope.zadatak.stanje = "Dovršen";
-    }
+    $scope.id_zadatka = JSON.parse(localStorage.getItem("zadatak"));
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url:
+          "json.php?korisnik_id=" +
+          $rootScope.korisnik +
+          "&json_id=dohvati_zadatak&zadatak_id=" +
+          $scope.id_zadatka,
+      }).then(
+        function (response) {
+          $scope.zadatak_arr = response.data;
+          $scope.zadatak = $scope.zadatak_arr[0];
+          console.log($scope.zadatak);
+
+          if ($scope.zadatak.stanje == 0) {
+            $scope.zadatak_stanje = "Nedovršen";
+          } else {
+            $scope.zadatak_stanje = "Dovršen";
+          }
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 200);
   };
 
   // Dohvacanje korisnika

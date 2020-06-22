@@ -140,6 +140,30 @@ a {
   box-shadow: 5px 5px 5px 0px rgba(71, 71, 71, 1);
 }
 
+.card-dovrsen {
+  margin-left: 70px;
+  margin-bottom: 40px;
+  background-color: #3f613d;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 0px rgba(71, 71, 71, 1);
+  color: #e4f3ad;
+}
+.card-dovrsen .zadatak_kreator a,
+.card-dovrsen .otvori_korisnika a,
+.card-dovrsen .zadatak_izvrsitelj a {
+  color: #e4f3ad !important;
+}
+.card-dovrsen .zadatak_kreator a:hover,
+.card-dovrsen .otvori_korisnika a:hover,
+.card-dovrsen .zadatak_izvrsitelj a:hover {
+  color: #baf4a5 !important;
+  text-shadow: 2px 2px 1px black !important;
+}
+.card-dovrsen .zadatak_opis {
+  color: black;
+}
+
 .zadatak_kreator {
   font-weight: 700;
   margin-left: 40px;
@@ -151,12 +175,17 @@ a {
   margin-left: 40px;
   margin-top: 15px;
 }
+.otvori_korisnika {
+  font-weight: 700;
+}
 .zadatak_kreator a,
-.zadatak_izvrsitelj a {
+.zadatak_izvrsitelj a,
+.otvori_korisnika a {
   color: #222;
 }
 .zadatak_kreator a:hover,
-.zadatak_izvrsitelj a:hover {
+.zadatak_izvrsitelj a:hover,
+.otvori_korisnika a:hover {
   color: #3f613d;
   text-shadow: 2px 2px 1px #e4f3ad;
 }
@@ -289,7 +318,8 @@ a {
   margin-top: 40px;
 }
 
-.container-zadatak .card {
+.container-zadatak .card,
+.container-zadatak .card-dovrsen {
   padding: 50px;
 }
 
@@ -302,6 +332,9 @@ a {
 .komentiranje {
   margin-bottom: 0;
   margin-top: 30px;
+}
+.komentiranje button {
+  margin-right: 10px;
 }
 
 .pregled_zadatak_naziv {

@@ -56,7 +56,9 @@
 
 <div class="sredinaUser" ng-init="PrikaziZasebniZadatak()">
   <div class="container-zadatak">
-    <div class="card">
+    <div
+      ng-class="{'card': zadatak.stanje == 0, 'card-dovrsen':  zadatak.stanje == 1}"
+    >
       <form>
         <div class="d-flex justify-content-sm-around">
           <h5 class="pregled_zadatak_naziv">
@@ -75,11 +77,16 @@
             'dd-MM-yyyy' | promjenaFormata}}
           </p>
         </div>
-        <div class="form-group">
-          <p><span>Kreator:</span> {{zadatak.kreator}}</p>
+        <div class="form-group otvori_korisnika">
+          <p>
+            <span>Kreator: </span
+            ><a href="" ng-click="DohvatiDrugogKorisnika(zadatak.kreator)"
+              >{{zadatak.kreator}}</a
+            >
+          </p>
         </div>
         <div class="form-group">
-          <p><span>Stanje:</span> {{zadatak.stanje}}</p>
+          <p><span>Stanje:</span> {{zadatak_stanje}}</p>
         </div>
         <div class="form-group">
           <p>
@@ -93,7 +100,11 @@
           <button class="btn btn-dark" ng-click="">
             <i class="fa fa-comments fa-lg" aria-hidden="true"></i>
           </button>
-          <button class="btn btn-dark" ng-click="">
+          <button
+            ng-if="zadatak.stanje == 0"
+            class="btn btn-dark"
+            ng-click="DovrsenZadatakModal()"
+          >
             <i class="fa fa-check fa-lg" aria-hidden="true"></i>
           </button>
         </div>
@@ -117,3 +128,30 @@
     </div>
   </div>
 </footer>
+
+<!-- Dovrsen zadatak -->
+<div class="modal fade" id="modalDovrsenZadatak">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">Dovrši zadatak</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Potvrdite označavanje zadatka <b>{{naziv_zadatka}}</b> kao dovršenog.
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="DovrsiZadatak()" class="btn btn-dark">
+          Potvrdi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

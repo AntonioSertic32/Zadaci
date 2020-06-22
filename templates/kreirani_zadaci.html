@@ -120,7 +120,11 @@
         class="align-top"
         ng-repeat="zadatak in zadaci  | orderBy:orderProperty | filter: inputTekst "
       >
-        <div class="card text-center" style="width: 25rem; height: 320px;">
+        <div
+          class="text-center"
+          style="width: 25rem; height: 320px;"
+          ng-class="{'card': zadatak.stanje == 0, 'card-dovrsen':  zadatak.stanje == 1}"
+        >
           <div class="card-body">
             <div class="d-flex justify-content-center">
               <h5 class="zadatak_naziv text-center">
@@ -131,7 +135,6 @@
             <div class="row justify-content-center">
               <div class="col-10 zadatak_datumi">
                 {{zadatak.datum_pocetka | date: 'dd-MM-yyyy' | promjenaFormata}}
-                <!--<i class="fa fa-hand-o-right" aria-hidden="true"></i>-->
                 <i class="fa fa-arrow-right datum_arrow" aria-hidden="true"></i>
                 {{zadatak.datum_zavrsetka | date: 'dd-MM-yyyy' |
                 promjenaFormata}}
@@ -163,7 +166,7 @@
               <div class="col-3">
                 <a
                   href=""
-                  ng-click="OtvoriZasebniKreiraniZadatak(zadatak)"
+                  ng-click="OtvoriZasebniKreiraniZadatak(zadatak.id)"
                   class="btn btn-dark"
                 >
                   <i class="fa fa-plus" aria-hidden="true"></i>

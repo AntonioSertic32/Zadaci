@@ -19,6 +19,8 @@ class UpravljanjeZadacima {
     public $zadaci = array();
     public $komentari = array();
 
+    public $zadatak = array();
+
     public function __construct($user_id = NULL)
     {
         try
@@ -279,10 +281,85 @@ class UpravljanjeZadacima {
 
     public function Spol($Spol, $UserID) {
         $sQuery = "UPDATE korisnik SET spol = '$Spol' WHERE id = $UserID";
-        $oData = array(
-            'Spol' => $Spol,
-            'UserID' => $UserID
-        );
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }
+    }
+
+    public function ObrisiZadatak($ID) {
+        $sQuery = "DELETE FROM zadatak WHERE id = '$ID'";
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }
+    }
+
+    public function UrediZadatak($ID, $Naziv, $Datum_pocetka, $Datum_zavrsetka, $Izvrsitelj, $Opis) {
+        $sQuery = "UPDATE zadatak SET naziv = '$Naziv', datum_pocetka = '$Datum_pocetka', datum_zavrsetka = '$Datum_zavrsetka', izvrsitelj = '$Izvrsitelj', opis = '$Opis' WHERE id = $ID";
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }
+    }
+
+    public function DohvatiKreiraniZadatak($zadatakID)
+    {
+        $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelj, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelj=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id WHERE zadatak.kreator=$this->userId AND zadatak.id= $zadatakID";
+        
+        $oRecord = $this->connection->query($sQuery);
+        while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
+            $oZadaci = new Zadatak(
+                $oRow['id'],
+                $oRow['naziv'],
+                $oRow['datum_pocetka'],
+                $oRow['datum_zavrsetka'],
+                $oRow['izvrsitelj'],
+                $oRow['kreator'],
+                $oRow['stanje'],
+                $oRow['opis']
+            );
+            array_push($this->zadatak, $oZadaci);
+        }
+    }
+    public function DohvatiZadatak($zadatakID)
+    {
+        $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelj, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelj=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id WHERE zadatak.izvrsitelj=$this->userId AND zadatak.id= $zadatakID";
+        
+        $oRecord = $this->connection->query($sQuery);
+        while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
+            $oZadaci = new Zadatak(
+                $oRow['id'],
+                $oRow['naziv'],
+                $oRow['datum_pocetka'],
+                $oRow['datum_zavrsetka'],
+                $oRow['izvrsitelj'],
+                $oRow['kreator'],
+                $oRow['stanje'],
+                $oRow['opis']
+            );
+            array_push($this->zadatak, $oZadaci);
+        }
+    }
+    public function IspisiZadatak() {
+        header('Content-type: charset=ISO-8859-1');
+        return json_encode($this->zadatak);
+    }
+
+    public function DovrsiZadatak($ID) {
+        $sQuery = "UPDATE zadatak SET stanje = 1 WHERE id = $ID";
         try
         {
             $stmt =$this->connection->prepare($sQuery);

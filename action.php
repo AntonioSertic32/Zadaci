@@ -77,6 +77,41 @@ switch($sAction)
         echo $status;
     break;
 
+    case 'obrisi_zadatak':
+        $ID = $oPostData->id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> ObrisiZadatak($ID);
+
+        echo $status;
+    break;
+
+    case 'uredi_zadatak':
+        $ID = $oPostData->id;
+        $Naziv = $oPostData->naziv;
+		$Datum_pocetka = $oPostData->datum_pocetka;
+		$Datum_zavrsetka = $oPostData->datum_zavrsetka;
+		$Izvrsitelj = $oPostData->izvrsitelj;
+        $Opis = $oPostData->opis;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> UrediZadatak($ID, $Naziv, $Datum_pocetka, $Datum_zavrsetka, $Izvrsitelj, $Opis);
+
+        echo $status;
+
+    break;
+
+    case 'dovrsi_zadatak':
+        $ID = $oPostData->id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> DovrsiZadatak($ID);
+
+        echo $status;
+        
+    break;
+
+
 }
 
 ?>

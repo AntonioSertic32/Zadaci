@@ -54,9 +54,11 @@
   </div>
 </nav>
 
-<div class="sredinaUser" ng-init="PrikaziZasebniZadatak()">
+<div class="sredinaUser" ng-init="PrikaziZasebniKreiraniZadatak()">
   <div class="container-zadatak">
-    <div class="card">
+    <div
+      ng-class="{'card': zadatak.stanje == 0, 'card-dovrsen':  zadatak.stanje == 1}"
+    >
       <form>
         <div class="d-flex justify-content-sm-around">
           <h5 class="pregled_zadatak_naziv">
@@ -75,11 +77,16 @@
             'dd-MM-yyyy' | promjenaFormata}}
           </p>
         </div>
-        <div class="form-group">
-          <p><span>Kreator:</span> {{zadatak.kreator}}</p>
+        <div class="form-group otvori_korisnika">
+          <p>
+            <span>Izvršitelj: </span
+            ><a href="" ng-click="DohvatiDrugogKorisnika(zadatak.izvrsitelj)"
+              >{{zadatak.izvrsitelj}}</a
+            >
+          </p>
         </div>
         <div class="form-group">
-          <p><span>Stanje:</span> {{zadatak.stanje}}</p>
+          <p><span>Stanje:</span> {{zadatak_stanje}}</p>
         </div>
         <div class="form-group">
           <p>
@@ -90,13 +97,13 @@
           </div>
         </div>
         <div class="form-group komentiranje text-right">
-          <button class="btn btn-dark" style="margin-right: 10px;" ng-click="">
-            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
-          </button>
           <button class="btn btn-dark" ng-click="">
             <i class="fa fa-comments fa-lg" aria-hidden="true"></i>
           </button>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="UrediZadatakModal()">
+            <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+          </button>
+          <button class="btn btn-dark" ng-click="ObrisiZadatakModal()">
             <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
           </button>
         </div>
@@ -120,3 +127,123 @@
     </div>
   </div>
 </footer>
+
+<!-- Obrsi zadatak -->
+<div class="modal fade" id="modalObrsiZadatak">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">Brisanje zadatka</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>
+          Jeste li sigurni da želite obrisati zadatak: <b>{{naziv_zadatka}}</b>?
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="ObrisiZadatak()" class="btn btn-dark">
+          Obriši
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Uredi zadatak -->
+<div class="modal fade" id="modalUrediZadatak">
+  <div class="modal-dialog modal-lg" ng-init="DohvatiKorisnike()">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">Novi zadatak</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div
+          class="alert {{alertClass}} alert-dismissible text-center"
+          ng-show="alertMsg"
+        >
+          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
+            >&times;</a
+          >{{alertMessage}}
+        </div>
+
+        <form name="NoviZadatakForm" method="POST">
+          <div class="form-group">
+            <label for="inputNaziv">Naziv</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputNaziv"
+              ng-model="edit_naziv"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputDatumPocetka">Datum početka</label>
+            <input
+              type="date"
+              class="form-control"
+              id="inputDatumPocetka"
+              ng-model="edit_datum_pocetka "
+              placeholder="dd-MM-yyyy"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputDatumZavrsetka">Datum završetka</label>
+            <input
+              type="date"
+              class="form-control"
+              id="inputDatumZavrsetka"
+              ng-model="edit_datum_zavrsetka"
+              placeholder="dd-MM-yyyy"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputIzvrsitelj">Izvršitelj</label>
+            <select
+              class="form-control"
+              id="inputIzvrsitelj"
+              ng-model="edit_izvrsitelj"
+              style="height: 40px;"
+              ng-options="korisnicko_ime for korisnicko_ime in korisnicka_imena"
+            >
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="inputOpis">Opis</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputOpis"
+              placeholder="Opis"
+              ng-model="edit_opis"
+            />
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" ng-click="UrediZadatak()" class="btn btn-dark">
+          Uredi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
