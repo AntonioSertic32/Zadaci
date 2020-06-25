@@ -49,7 +49,11 @@ switch($sAction)
 	case 'logout':
 		session_destroy();
     break;
-    
+
+    // ------------------------------------------------------------------------------------------------------------>>>
+    // ------------------------------------------------------------------------------------------------------------>>>
+    // ------------------------------------------------------------------------------------------------------------>>>
+
     case 'novi_zadatak':
 
 		$Naziv = $oPostData->naziv;
@@ -65,16 +69,6 @@ switch($sAction)
 
         echo $status;
 
-    break;
-
-    case 'promjeni_spol':
-        $Spol = $oPostData->spol;
-        $UserID = $oPostData->user_id;
-        
-        $upravljanjeZadacima = new UpravljanjeZadacima();
-        $status = $upravljanjeZadacima -> Spol($Spol, $UserID);
-
-        echo $status;
     break;
 
     case 'obrisi_zadatak':
@@ -110,7 +104,111 @@ switch($sAction)
         echo $status;
         
     break;
+    
+    
+    // ------------------------------------------------------------------------------------------------------------>>>
+    // ------------------------------------------------------------------------------------------------------------>>>
+    // ------------------------------------------------------------------------------------------------------------>>>
 
+    case 'promjeni_avatara':
+        $Avatar = $oPostData->avatar;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Avatar($Avatar, $UserID);
+
+        echo $status;
+    break;
+
+    case 'promjeni_korisnicko_ime':
+        $Korisnico_ime = $oPostData->korisnico_ime;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> KorisnickoIme($Korisnico_ime, $UserID);
+
+        echo $status;
+    break;
+
+    case 'promjeni_ime':
+        $Ime = $oPostData->ime;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Ime($Ime, $UserID);
+
+        echo $status;
+    break;
+    
+    case 'promjeni_prezime':
+        $Prezime = $oPostData->prezime;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Prezime($Prezime, $UserID);
+
+        echo $status;
+    break;
+
+    case 'promjeni_email':
+        $Email = $oPostData->email;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Email($Email, $UserID);
+
+        echo $status;
+    break;
+
+    case 'promjeni_tel':
+        $Tel = $oPostData->tel;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Tel($Tel, $UserID);
+
+        echo $status;
+    break;
+
+    case 'promjeni_bio':
+        $Bio = $oPostData->bio;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Bio($Bio, $UserID);
+
+        echo $status;
+    break;
+
+    case 'promjeni_prebivaliste':
+        $Prebivaliste = $oPostData->prebivaliste;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Prebivaliste($Prebivaliste, $UserID);
+
+        echo $status;
+    break;
+
+    case 'promjeni_datum_rodenja':
+        $DatumRodenja = $oPostData->datum_rodenja;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> DatumRodenja($DatumRodenja, $UserID);
+
+        echo $status;
+    break;
+
+    case 'promjeni_spol':
+        $Spol = $oPostData->spol;
+        $UserID = $oPostData->user_id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> Spol($Spol, $UserID);
+
+        echo $status;
+    break;
 
 }
 

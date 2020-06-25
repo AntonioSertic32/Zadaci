@@ -89,7 +89,8 @@
         </div>
         <div class="form-group" ng-if="info.datum_rodenja != null">
           <p for="exampleInputEmail1">
-            <span>Datum rođenja:</span> {{info.datum_rodenja}}
+            <span>Datum rođenja:</span> {{info.datum_rodenja | date:
+            'dd-MM-yyyy' | promjenaFormata}}
           </p>
         </div>
         <div class="form-group" ng-if="info.spol != null">

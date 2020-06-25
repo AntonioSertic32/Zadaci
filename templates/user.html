@@ -86,7 +86,10 @@
           <p><span>Prebivalište:</span> {{info.prebivaliste}}</p>
         </div>
         <div class="form-group" ng-if="info.datum_rodenja != null">
-          <p><span>Datum rođenja:</span> {{info.datum_rodenja}}</p>
+          <p>
+            <span>Datum rođenja:</span> {{info.datum_rodenja | date:
+            'dd-MM-yyyy' | promjenaFormata}}
+          </p>
         </div>
         <div class="form-group" ng-if="info.spol != null">
           <p><span>Spol:</span> {{info.spol}}</p>

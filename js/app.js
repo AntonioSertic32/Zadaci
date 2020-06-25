@@ -623,35 +623,268 @@ oModul.controller("glavniController", function (
 
   $scope.openModalAvatar = function () {
     var modal_popup = angular.element("#promjeni_avatar");
+    $scope.new_avatar = "";
     modal_popup.modal("show");
-    $scope.naziv_zadatka = $scope.zadatak.naziv;
-  };
-  $scope.closeModalAvatar = function () {
-    var modal_popup = angular.element("#promjeni_avatar");
-    modal_popup.modal("hide");
   };
   $scope.OdabirAvataraModal = function () {
     $scope.openModalAvatar();
   };
-  /*
+  $scope.novi_avatar = function (putanja, slovo) {
+    console.log(slovo + " " + putanja);
+    $scope.new_avatar = slovo;
+    $scope.putanja_do_avatara = putanja;
+  };
   $scope.SpremiAvatara = function () {
+    if ($scope.new_avatar == "") {
+      alert("Niste označili niti jednog avatara..");
+    } else {
+      var oData = {
+        action_id: "promjeni_avatara",
+        avatar: $scope.putanja_do_avatara,
+        user_id: $scope.korisnik_info[0].id,
+      };
+      $http.post("action.php", oData).then(function (response) {
+        if (response.data == 1) {
+          alert("Uspješno promjenjen avatar!");
+
+          $window.location.reload();
+        } else {
+          alert(response.data);
+        }
+      });
+    }
+  };
+
+  // Korisnicko ime
+
+  $scope.openModalKorisnickoIme = function () {
+    var modal_popup = angular.element("#promjeni_korisnicko_ime");
+    $scope.new_korisnicko_ime = $scope.korisnik_info[0].korisnicko_ime;
+    modal_popup.modal("show");
+  };
+  $scope.PromjeniKorisnickoIme = function () {
+    $scope.openModalKorisnickoIme();
+  };
+  $scope.SpremiKorisnickoIme = function () {
+    if ($scope.new_korisnicko_ime == "") {
+      alert("Korisničko ime je obavezno!");
+    } else {
+      var oData = {
+        action_id: "promjeni_korisnicko_ime",
+        korisnico_ime: $scope.new_korisnicko_ime,
+        user_id: $scope.korisnik_info[0].id,
+      };
+      $http.post("action.php", oData).then(function (response) {
+        if (response.data == 1) {
+          alert("Uspješno promjenjeno korisničko ime!");
+
+          $window.location.reload();
+        } else {
+          alert(response.data);
+        }
+      });
+    }
+  };
+
+  // Ime
+  $scope.openModalIme = function () {
+    var modal_popup = angular.element("#promjeni_ime");
+    $scope.new_ime = $scope.korisnik_info[0].ime;
+    modal_popup.modal("show");
+  };
+  $scope.PromjeniIme = function () {
+    $scope.openModalIme();
+  };
+  $scope.SpremiIme = function () {
+    if ($scope.new_ime == "") {
+      alert("Ime je obavezno!");
+    } else {
+      var oData = {
+        action_id: "promjeni_ime",
+        ime: $scope.new_ime,
+        user_id: $scope.korisnik_info[0].id,
+      };
+      $http.post("action.php", oData).then(function (response) {
+        if (response.data == 1) {
+          alert("Uspješno promjenjeno ime!");
+
+          $window.location.reload();
+        } else {
+          alert(response.data);
+        }
+      });
+    }
+  };
+
+  // Prezime
+  $scope.openModalPrezime = function () {
+    var modal_popup = angular.element("#promjeni_prezime");
+    $scope.new_prezime = $scope.korisnik_info[0].prezime;
+    modal_popup.modal("show");
+  };
+  $scope.PromjeniPrezime = function () {
+    $scope.openModalPrezime();
+  };
+  $scope.SpremiPrezime = function () {
+    if ($scope.new_prezime == "") {
+      alert("Prezime je obavezno!");
+    } else {
+      var oData = {
+        action_id: "promjeni_prezime",
+        prezime: $scope.new_prezime,
+        user_id: $scope.korisnik_info[0].id,
+      };
+      $http.post("action.php", oData).then(function (response) {
+        if (response.data == 1) {
+          alert("Uspješno promjenjeno prezime!");
+
+          $window.location.reload();
+        } else {
+          alert(response.data);
+        }
+      });
+    }
+  };
+
+  // Email
+  $scope.openModalEmail = function () {
+    var modal_popup = angular.element("#promjeni_email");
+    $scope.new_email = $scope.korisnik_info[0].email;
+    modal_popup.modal("show");
+  };
+  $scope.PromjeniEmail = function () {
+    $scope.openModalEmail();
+  };
+  $scope.SpremiEmail = function () {
+    $scope.alertMsg = true;
+    if ($scope.new_email == "") {
+      $scope.alertClass = "alert-danger";
+      $scope.alertMessage = "Email je obvezan!";
+    } else {
+      var oData = {
+        action_id: "promjeni_email",
+        email: $scope.new_email,
+        user_id: $scope.korisnik_info[0].id,
+      };
+      $http.post("action.php", oData).then(function (response) {
+        if (response.data == 1) {
+          alert("Uspješno promjenjen email!");
+
+          $window.location.reload();
+        } else {
+          $scope.alertClass = "alert-danger";
+          $scope.alertMessage = response.data;
+        }
+      });
+    }
+  };
+
+  // Tel
+  $scope.openModalTel = function () {
+    var modal_popup = angular.element("#promjeni_tel");
+    $scope.new_tel = $scope.korisnik_info[0].tel;
+    modal_popup.modal("show");
+  };
+  $scope.PromjeniTel = function () {
+    $scope.openModalTel();
+  };
+  $scope.SpremiTel = function () {
     var oData = {
-      action_id: "dovrsi_zadatak",
-      id: $scope.zadatak.id,
+      action_id: "promjeni_tel",
+      tel: $scope.new_tel,
+      user_id: $scope.korisnik_info[0].id,
     };
     $http.post("action.php", oData).then(function (response) {
       if (response.data == 1) {
-        alert("Uspješno ste dovršili zadatak!");
-        $scope.closeModalDovrsenZadatak();
-        $timeout(function () {
-          $window.location.reload();
-        }, 500);
+        alert("Uspješno promjenjen broj!");
+
+        $window.location.reload();
       } else {
         alert(response.data);
       }
     });
   };
-  */
+
+  // Prebivaliste
+  $scope.openModalPrebivaliste = function () {
+    var modal_popup = angular.element("#promjeni_prebivaliste");
+    $scope.new_prebivaliste = $scope.korisnik_info[0].prebivaliste;
+    modal_popup.modal("show");
+  };
+  $scope.PromjeniPrebivaliste = function () {
+    $scope.openModalPrebivaliste();
+  };
+  $scope.SpremiPrebivaliste = function () {
+    var oData = {
+      action_id: "promjeni_prebivaliste",
+      prebivaliste: $scope.new_prebivaliste,
+      user_id: $scope.korisnik_info[0].id,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno promjenjeno prebivaliste!");
+
+        $window.location.reload();
+      } else {
+        alert(response.data);
+      }
+    });
+  };
+
+  // Bio
+  $scope.openModalBio = function () {
+    var modal_popup = angular.element("#promjeni_bio");
+    $scope.new_bio = $scope.korisnik_info[0].bio;
+    modal_popup.modal("show");
+  };
+  $scope.PromjeniBio = function () {
+    $scope.openModalBio();
+  };
+  $scope.SpremiBio = function () {
+    var oData = {
+      action_id: "promjeni_bio",
+      bio: $scope.new_bio,
+      user_id: $scope.korisnik_info[0].id,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno promjenjena biografija!");
+
+        $window.location.reload();
+      } else {
+        alert(response.data);
+      }
+    });
+  };
+
+  // DatumRodenja
+  $scope.openModalDatumRodenja = function () {
+    var modal_popup = angular.element("#promjeni_datum_rodenja");
+    $scope.new_datum_rodenja = new Date($scope.korisnik_info[0].datum_rodenja);
+    modal_popup.modal("show");
+  };
+  $scope.PromjeniDatumRodenja = function () {
+    $scope.openModalDatumRodenja();
+  };
+  $scope.SpremiDatumRodenja = function (obrisiILIuredi) {
+    if (obrisiILIuredi == "obrisi") {
+      $scope.new_datum_rodenja = "obrisi";
+    }
+    var oData = {
+      action_id: "promjeni_datum_rodenja",
+      datum_rodenja: $scope.new_datum_rodenja,
+      user_id: $scope.korisnik_info[0].id,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno promjenjen datum rođenja!");
+
+        $window.location.reload();
+      } else {
+        alert(response.data);
+      }
+    });
+  };
 
   // Spol
   $scope.PromjeniSpol = function () {

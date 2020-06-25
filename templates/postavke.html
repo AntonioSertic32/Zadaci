@@ -71,42 +71,42 @@
     <form>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniKorisnickoIme()">
             <i class="fa fa-pencil fa-lg"></i></button
           ><span>Korisničko ime:</span> {{info.korisnicko_ime}}
         </p>
       </div>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniIme()">
             <i class="fa fa-pencil fa-lg"></i></button
           ><span>Ime:</span> {{info.ime}}
         </p>
       </div>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniPrezime()">
             <i class="fa fa-pencil fa-lg"></i></button
           ><span>Prezime:</span> {{info.prezime}}
         </p>
       </div>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniEmail()">
             <i class="fa fa-pencil fa-lg"></i></button
           ><span>Email:</span> {{info.email}}
         </p>
       </div>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniTel()">
             <i class="fa fa-pencil fa-lg"></i></button
           ><span>Telefon:</span> {{info.tel}}
         </p>
       </div>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniBio()">
             <i class="fa fa-pencil fa-lg"></i></button
           ><span>Biografija:</span>
         </p>
@@ -114,16 +114,19 @@
       </div>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniPrebivaliste()">
             <i class="fa fa-pencil fa-lg"></i></button
           ><span>Prebivalište:</span> {{info.prebivaliste}}
         </p>
       </div>
       <div class="form-group">
         <p>
-          <button class="btn btn-dark" ng-click="">
+          <button class="btn btn-dark" ng-click="PromjeniDatumRodenja()">
             <i class="fa fa-pencil fa-lg"></i></button
-          ><span>Datum rođenja:</span> {{info.datum_rodenja}}
+          ><span>Datum rođenja: </span
+          ><span ng-if="info.datum_rodenja != null" style="font-weight: normal;"
+            >{{info.datum_rodenja | date: 'dd-MM-yyyy' | promjenaFormata}}</span
+          >
         </p>
       </div>
       <div class="form-group">
@@ -167,74 +170,445 @@
         <div class="container">
           <div class="d-flex flex-row justify-content-around">
             <div class="d-flex flex-column">
-              <a class="avatar-link" href=""
+              <a
+                class="avatar-link"
+                href=""
+                ng-click="novi_avatar('1.jpg', 'A')"
                 ><img
                   class="img-fluid avatar"
                   src="http://localhost/Zadaci(FromBeginning)/assets/img/1.jpg"
                   class="avatar"
                   alt="Avatar icon"
-              /></a>
-              <a href="" class="avatar-link"
-                ><img
-                  class="img-fluid avatar"
-                  src="http://localhost/Zadaci(FromBeginning)/assets/img/2.jpg"
-                  class="avatar"
-                  alt="Avatar icon"
-              /></a>
-            </div>
-            <div class="d-flex flex-column">
-              <a href="" class="avatar-link"
-                ><img
-                  class="img-fluid avatar"
-                  src="http://localhost/Zadaci(FromBeginning)/assets/img/3.jpg"
-                  class="avatar"
-                  alt="Avatar icon"
-              /></a>
-              <a href="" class="avatar-link"
-                ><img
-                  class="img-fluid avatar"
-                  src="http://localhost/Zadaci(FromBeginning)/assets/img/4.jpg"
-                  class="avatar"
-                  alt="Avatar icon"
-              /></a>
-            </div>
-            <div class="d-flex flex-column">
-              <a href="" class="avatar-link"
+                />
+              </a>
+              <p class="text-center">A</p>
+              <a
+                href=""
+                class="avatar-link"
+                ng-click="novi_avatar('5.jpg', 'E')"
                 ><img
                   class="img-fluid avatar"
                   src="http://localhost/Zadaci(FromBeginning)/assets/img/5.jpg"
                   class="avatar"
                   alt="Avatar icon"
               /></a>
-              <a href="" class="avatar-link"
+              <p class="text-center">E</p>
+            </div>
+            <div class="d-flex flex-column">
+              <a
+                href=""
+                class="avatar-link"
+                ng-click="novi_avatar('2.jpg', 'B')"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/2.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+              <p class="text-center">B</p>
+              <a
+                href=""
+                class="avatar-link"
+                ng-click="novi_avatar('6.jpg', 'F')"
                 ><img
                   class="img-fluid avatar"
                   src="http://localhost/Zadaci(FromBeginning)/assets/img/6.jpg"
                   class="avatar"
                   alt="Avatar icon"
               /></a>
+              <p class="text-center">F</p>
             </div>
             <div class="d-flex flex-column">
-              <a href="" class="avatar-link"
+              <a
+                href=""
+                class="avatar-link"
+                ng-click="novi_avatar('3.jpg', 'C')"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/3.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+              <p class="text-center">C</p>
+              <a
+                href=""
+                class="avatar-link"
+                ng-click="novi_avatar('7.jpg', 'G')"
                 ><img
                   class="img-fluid avatar"
                   src="http://localhost/Zadaci(FromBeginning)/assets/img/7.jpg"
                   class="avatar"
                   alt="Avatar icon"
               /></a>
-              <a href="" class="avatar-link"
+              <p class="text-center">G</p>
+            </div>
+            <div class="d-flex flex-column">
+              <a
+                href=""
+                class="avatar-link"
+                ng-click="novi_avatar('4.jpg', 'D')"
+                ><img
+                  class="img-fluid avatar"
+                  src="http://localhost/Zadaci(FromBeginning)/assets/img/4.jpg"
+                  class="avatar"
+                  alt="Avatar icon"
+              /></a>
+              <p class="text-center">D</p>
+              <a
+                href=""
+                class="avatar-link"
+                ng-click="novi_avatar('8.jpg', 'H')"
                 ><img
                   class="img-fluid avatar"
                   src="http://localhost/Zadaci(FromBeginning)/assets/img/8.jpg"
                   class="avatar"
                   alt="Avatar icon"
               /></a>
+              <p class="text-center">H</p>
             </div>
           </div>
+          <h2 class="text-center isipisOdabranogAvatara">
+            Odabrali ste avatara: {{new_avatar}}
+          </h2>
         </div>
       </div>
       <div class="modal-footer">
         <button type="submit" ng-click="SpremiAvatara()" class="btn btn-dark">
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Korisnicko ime -->
+<div class="modal fade" id="promjeni_korisnicko_ime">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">
+          Promjena korisničkog imena
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputKorisnickoIme">Novo korisničko ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputKorisnickoIme"
+              ng-model="new_korisnicko_ime"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          ng-click="SpremiKorisnickoIme()"
+          class="btn btn-dark"
+        >
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Ime -->
+<div class="modal fade" id="promjeni_ime">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">
+          Promjena imena
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputIme">Novo ime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputIme"
+              ng-model="new_ime"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="SpremiIme()" class="btn btn-dark">
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Prezime -->
+<div class="modal fade" id="promjeni_prezime">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">
+          Promjena prezimena
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputPrezime">Novo prezime</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputPrezime"
+              ng-model="new_prezime"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="SpremiPrezime()" class="btn btn-dark">
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Email -->
+<div class="modal fade" id="promjeni_email">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">
+          Promjena email-a
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <div
+          class="alert {{alertClass}} alert-dismissible text-center"
+          ng-show="alertMsg"
+        >
+          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
+            >&times;</a
+          >{{alertMessage}}
+        </div>
+
+        <div
+          class="alert alert-danger alert-dismissible text-center"
+          ng-show="myForm.input.$error.email"
+        >
+          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
+            >&times;</a
+          >Not valid email!
+        </div>
+        <form name="myForm" method="POST">
+          <div class="form-group">
+            <label for="inputEmail">Novi email</label>
+            <input
+              type="email"
+              class="form-control"
+              id="inputEmail"
+              aria-describedby="emailHelp"
+              placeholder="Unesite email"
+              ng-model="new_email"
+              name="input"
+              required
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="SpremiEmail()" class="btn btn-dark">
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Tel -->
+<div class="modal fade" id="promjeni_tel">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">
+          Promjena broja telefona
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputTel">Novi broj</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputTel"
+              ng-model="new_tel"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="SpremiTel()" class="btn btn-dark">
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bio -->
+<div class="modal fade" id="promjeni_bio">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">
+          Promjena biografije
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputBio">Nova biografija</label>
+            <textarea
+              class="form-control"
+              id="inputBio"
+              ng-model="new_bio"
+              rows="3"
+            ></textarea>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" ng-click="SpremiBio()" class="btn btn-dark">
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Prebivaliste -->
+<div class="modal fade" id="promjeni_prebivaliste">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">
+          Promjena prebivališta
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputPrebivaliste">Novo prebivalište</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputPrebivaliste"
+              ng-model="new_prebivaliste"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          ng-click="SpremiPrebivaliste()"
+          class="btn btn-dark"
+        >
+          Spremi
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Datum rodenja -->
+<div class="modal fade" id="promjeni_datum_rodenja">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">
+          Promjena datuma rođenja
+        </h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group">
+            <label for="inputDatumRodenja">Novi datum rođenja</label>
+            <input
+              type="date"
+              class="form-control"
+              id="inputDatumRodenja"
+              ng-model="new_datum_rodenja"
+            />
+          </div>
+          <button
+            class="btn btn-danger"
+            ng-click="SpremiDatumRodenja('obrisi')"
+          >
+            <i class="fa fa-trash fa-lg" aria-hidden="true"></i>
+          </button>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button
+          type="submit"
+          ng-click="SpremiDatumRodenja('uredi')"
+          class="btn btn-dark"
+        >
           Spremi
         </button>
         <button type="button" class="btn btn-danger" data-dismiss="modal">

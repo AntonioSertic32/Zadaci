@@ -297,6 +297,20 @@ class UpravljanjeZadacima {
         }
     }
 
+    public function Avatar($Avatar, $UserID) {
+        
+        $sQuery = "UPDATE korisnik SET slika = '$Avatar' WHERE id = $UserID";
+
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }
+    }
+
     public function ObrisiZadatak($ID) {
         $sQuery = "DELETE FROM zadatak WHERE id = '$ID'";
         try
@@ -374,6 +388,148 @@ class UpravljanjeZadacima {
         } catch (PDOException $error) {
             return $error->getMessage();
         }
+    }
+
+    public function KorisnickoIme($Korisnico_ime, $UserID) {
+        $sQueryProvjera= "SELECT korisnicko_ime FROM korisnik WHERE korisnicko_ime='$Korisnico_ime'";
+        $oRecord = $this->connection->query($sQueryProvjera);
+        $row = $oRecord->fetch();
+        $count = $oRecord->rowCount();
+        if ($count > 0) {
+            return "Već postoji korisnik s tim Korisničkim imenom!";
+        }
+        else {
+            $sQuery = "UPDATE korisnik SET korisnicko_ime = '$Korisnico_ime' WHERE id = $UserID";
+            try
+            {
+                $stmt =$this->connection->prepare($sQuery);
+                $stmt->execute();
+                return 1;
+            } catch (PDOException $error) {
+                return $error->getMessage();
+            }
+        }        
+    }
+
+    public function Ime($Ime, $UserID) {
+        $sQuery = "UPDATE korisnik SET ime = '$Ime' WHERE id = $UserID";
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }        
+    }
+
+    public function Prezime($Prezime, $UserID) {
+        $sQuery = "UPDATE korisnik SET prezime = '$Prezime' WHERE id = $UserID";
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }          
+    }
+
+    public function Email($Email, $UserID) {
+        $sQueryOne = "SELECT email FROM korisnik WHERE email='$Email'";
+        $oRecord = $this->connection->query($sQueryOne);
+        $row = $oRecord->fetch();
+        $count = $oRecord->rowCount();
+        if ($count > 0) {
+            return "Već postoji korisnik s tim Email-om!";
+        }
+        else {
+            $sQuery = "UPDATE korisnik SET email = '$Email' WHERE id = $UserID";
+            try
+            {
+                $stmt =$this->connection->prepare($sQuery);
+                $stmt->execute();
+                return 1;
+            } catch (PDOException $error) {
+                return $error->getMessage();
+            }  
+        }        
+    }
+
+    public function Tel($Tel, $UserID) {
+        if($Tel == "") {
+            
+            $sQuery = "UPDATE korisnik SET tel = null WHERE id = $UserID";
+        }else {
+
+            $sQuery = "UPDATE korisnik SET tel = '$Tel' WHERE id = $UserID";
+        }
+        
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }          
+    }
+
+    public function Bio($Bio, $UserID) {
+        if($Bio == "") {
+            
+            $sQuery = "UPDATE korisnik SET bio = null WHERE id = $UserID";
+        }else {
+
+            $sQuery = "UPDATE korisnik SET bio = '$Bio' WHERE id = $UserID";
+        }
+        
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }          
+    }
+
+    public function Prebivaliste($Prebivaliste, $UserID) {
+        if($Prebivaliste == "") {
+            
+            $sQuery = "UPDATE korisnik SET prebivaliste = null WHERE id = $UserID";
+        }else {
+
+            $sQuery = "UPDATE korisnik SET prebivaliste = '$Prebivaliste' WHERE id = $UserID";
+        }
+        
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }          
+    }
+
+    public function DatumRodenja($DatumRodenja, $UserID) {
+        if($DatumRodenja == "obrisi") {
+            
+            $sQuery = "UPDATE korisnik SET datum_rodenja = null WHERE id = $UserID";
+        }else {
+
+            $sQuery = "UPDATE korisnik SET datum_rodenja = '$DatumRodenja' WHERE id = $UserID";
+        }
+        
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }          
     }
 }
 
