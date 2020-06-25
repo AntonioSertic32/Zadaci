@@ -18,16 +18,16 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#!moji_zadaci"
-          >Moji zadaci<span class="sr-only">(current)</span></a
-        >
+      <li class="nav-item">
+        <a class="nav-link" href="#!moji_zadaci">Moji zadaci</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#!kreirani_zadaci">Kreirani zadaci</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#!dovrseni_zadaci">Dovršeni zadaci</a>
+        <a class="nav-link active" href="#!dovrseni_zadaci"
+          >Dovršeni zadaci<span class="sr-only">(current)</span></a
+        >
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#!kalendar">Kalendar</a>
@@ -59,7 +59,7 @@
   </div>
 </nav>
 
-<div class="sredinaUser" ng-init="dohvatiMojeZadatke()">
+<div class="sredinaUser" ng-init="dohvatiDovrseneZadatke()">
   <!-- Izbornik -->
   <div class="izbornik d-flex justify-content-sm-around">
     <!-- Trazilica -->

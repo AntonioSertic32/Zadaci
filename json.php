@@ -20,6 +20,9 @@ if (isset($_GET['zadatak_id'])) {
 
 
 switch ($sJsonID) {
+
+    // ---------------------------------------------------------------------------------- >> Dohvacanje zadataka
+
     case 'dohvati_moje_zadatke':
         
         $upravljanjeZadacima = new UpravljanjeZadacima($userId);
@@ -34,6 +37,40 @@ switch ($sJsonID) {
         $upravljanjeZadacima -> DohvatiKreiraneZadatke();
         echo $upravljanjeZadacima -> IspisiZadatke();
 
+    break;
+    
+    case 'dohvati_dovrsene_zadatke':
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima($userId);
+        $upravljanjeZadacima -> DohvatiDovrseneZadatke();
+        echo $upravljanjeZadacima -> IspisiZadatke();
+
+    break;
+
+    // Dohvacanje zasebnih zadataka
+    
+    case 'dohvati_kreirani_zadatak':
+        $upravljanjeZadacima = new UpravljanjeZadacima($userId);
+        $upravljanjeZadacima -> DohvatiKreiraniZadatak($zadatakID);
+        echo $upravljanjeZadacima -> IspisiZadatak();
+        
+    break;
+
+    case 'dohvati_zadatak':
+        $upravljanjeZadacima = new UpravljanjeZadacima($userId);
+        $upravljanjeZadacima -> DohvatiZadatak($zadatakID);
+        echo $upravljanjeZadacima -> IspisiZadatak();
+        
+    break;
+
+    // ---------------------------------------------------------------------------------- >> Dohvacanje korisnika
+
+    case 'dohvati_korisnike':
+
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $upravljanjeZadacima -> DohvatiKorisnike();
+        echo $upravljanjeZadacima -> IspisiKorisnike();
+        
     break;
 
     case 'dohvati_korisnika':
@@ -52,13 +89,7 @@ switch ($sJsonID) {
         
     break;
 
-    case 'dohvati_korisnike':
-
-        $upravljanjeZadacima = new UpravljanjeZadacima();
-        $upravljanjeZadacima -> DohvatiKorisnike();
-        echo $upravljanjeZadacima -> IspisiKorisnike();
-        
-    break;
+    // ---------------------------------------------------------------------------------- >> Dohvacanje komentara
 
     case 'dohvati_komentare':
 
@@ -67,20 +98,5 @@ switch ($sJsonID) {
         
     break;
 
-    case 'dohvati_kreirani_zadatak':
-        $upravljanjeZadacima = new UpravljanjeZadacima($userId);
-        $upravljanjeZadacima -> DohvatiKreiraniZadatak($zadatakID);
-        echo $upravljanjeZadacima -> IspisiZadatak();
-        
-    break;
-
-    case 'dohvati_zadatak':
-        $upravljanjeZadacima = new UpravljanjeZadacima($userId);
-        $upravljanjeZadacima -> DohvatiZadatak($zadatakID);
-        echo $upravljanjeZadacima -> IspisiZadatak();
-        
-    break;
-
-    
 }
 ?>

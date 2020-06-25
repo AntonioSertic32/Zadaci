@@ -7,36 +7,46 @@ oModul.config(function ($routeProvider) {
     templateUrl: "templates/login.html",
     controller: "glavniController",
   });
+
+  // Zadaci
   $routeProvider.when("/moji_zadaci", {
     templateUrl: "templates/moji_zadaci.html",
-    controller: "glavniController",
-  });
-  $routeProvider.when("/kreirani_zadaci", {
-    templateUrl: "templates/kreirani_zadaci.html",
-    controller: "glavniController",
-  });
-  $routeProvider.when("/kalendar", {
-    templateUrl: "templates/kalendar.html",
-    controller: "glavniController",
-  });
-  $routeProvider.when("/user", {
-    templateUrl: "templates/user.html",
-    controller: "glavniController",
-  });
-  $routeProvider.when("/postavke", {
-    templateUrl: "templates/postavke.html",
     controller: "glavniController",
   });
   $routeProvider.when("/pregled_zadatka", {
     templateUrl: "templates/pregled_zadatka.html",
     controller: "glavniController",
   });
+
+  $routeProvider.when("/kreirani_zadaci", {
+    templateUrl: "templates/kreirani_zadaci.html",
+    controller: "glavniController",
+  });
   $routeProvider.when("/pregled_kreiranog_zadatka", {
     templateUrl: "templates/pregled_kreiranog_zadatka.html",
     controller: "glavniController",
   });
+
+  $routeProvider.when("/dovrseni_zadaci", {
+    templateUrl: "templates/dovrseni_zadaci.html",
+    controller: "glavniController",
+  });
+  $routeProvider.when("/kalendar", {
+    templateUrl: "templates/kalendar.html",
+    controller: "glavniController",
+  });
+
+  // Korisnicki profil i postavke
+  $routeProvider.when("/user", {
+    templateUrl: "templates/user.html",
+    controller: "glavniController",
+  });
   $routeProvider.when("/drugi_user", {
     templateUrl: "templates/drugi_user.html",
+    controller: "glavniController",
+  });
+  $routeProvider.when("/postavke", {
+    templateUrl: "templates/postavke.html",
     controller: "glavniController",
   });
 
@@ -46,16 +56,19 @@ oModul.config(function ($routeProvider) {
 });
 
 // Kontroler
-
 oModul.controller("glavniController", function (
   $scope,
   $http,
   $location,
   $timeout,
   $rootScope,
-  $timeout,
   $window
 ) {
+  // ----------------------------------------------------------------------------- >>
+  // ----------------------------------------------------------------------------- >> Provjera ulogiranog, Login, Registracija i Logout
+  // ----------------------------------------------------------------------------- >>
+
+  // Provjera ulogiranog
   $scope.CheckLoggedIn = function () {
     $http
       .post("action.php", {
@@ -83,8 +96,7 @@ oModul.controller("glavniController", function (
       );
   };
 
-  // Prijava
-
+  // Login
   $scope.Prijava = function () {
     var oData = {
       action_id: "login",
@@ -114,6 +126,23 @@ oModul.controller("glavniController", function (
   };
 
   // Registracija
+  $scope.openModal = function () {
+    var modal_popup = angular.element("#modalSignUp");
+    modal_popup.modal("show");
+  };
+
+  $scope.closeModal = function () {
+    var modal_popup = angular.element("#modalSignUp");
+    modal_popup.modal("hide");
+  };
+
+  $scope.modalRegistracija = function () {
+    $scope.openModal();
+  };
+
+  $scope.closeMsg = function () {
+    $scope.alertMsg = false;
+  };
 
   $scope.Registracija = function () {
     $scope.alertMsg = true;
@@ -153,7 +182,6 @@ oModul.controller("glavniController", function (
       }
     }
   };
-
   function uspjesnaRegistracija() {
     $scope.closeModal();
     $scope.regIme = null;
@@ -164,8 +192,7 @@ oModul.controller("glavniController", function (
     $scope.alertMsg = false;
   }
 
-  // Odjava
-
+  // Logout
   $scope.Odjava = function () {
     var oData = {
       action_id: "logout",
@@ -182,33 +209,18 @@ oModul.controller("glavniController", function (
     );
   };
 
-  // Rad sa modalom za registraciju
+  // ----------------------------------------------------------------------------- >>
+  // ----------------------------------------------------------------------------- >> Novi, Obrsi, Uredi, Dovrsi -> Zadatak
+  // ----------------------------------------------------------------------------- >>
 
-  $scope.openModal = function () {
-    var modal_popup = angular.element("#modalSignUp");
-    modal_popup.modal("show");
-  };
-  $scope.closeModal = function () {
-    var modal_popup = angular.element("#modalSignUp");
-    modal_popup.modal("hide");
-  };
-
-  $scope.modalRegistracija = function () {
-    $scope.openModal();
-  };
-
-  $scope.closeMsg = function () {
-    $scope.alertMsg = false;
-  };
-
-  // Modal za novi zadatak
-
+  // Novi zadatak
   $scope.openModalNoviZadatak = function () {
     var modal_popup = angular.element("#modalNoviZadatak");
     modal_popup.modal("show");
     $scope.regDatumPocetka = new Date();
     $scope.regDatumZavrsetka = new Date();
   };
+
   $scope.closeModalNoviZadatak = function () {
     var modal_popup = angular.element("#modalNoviZadatak");
     modal_popup.modal("hide");
@@ -217,60 +229,6 @@ oModul.controller("glavniController", function (
   $scope.ModalNoviZadatak = function () {
     $scope.openModalNoviZadatak();
   };
-
-  // Otvaranje korisnikovog profila -------------------------------------------------------------- >>>
-
-  $scope.PrikaziUserProfile = function () {
-    $scope.korisnik = JSON.parse(localStorage.getItem("korisnik"));
-    $timeout(function () {
-      $http({
-        method: "GET",
-        url:
-          "json.php?korisnik_id=" +
-          $scope.korisnik +
-          "&json_id=dohvati_korisnika",
-      }).then(
-        function (response) {
-          $scope.korisnik_info = response.data;
-          //console.log($scope.korisnik_info[0].bio);
-        },
-        function (error) {
-          console.log(error);
-        }
-      );
-    }, 300);
-  };
-
-  $scope.DohvatiDrugogKorisnika = function (korisnik) {
-    $http({
-      method: "GET",
-      url:
-        "json.php?korisnik_username=" +
-        korisnik +
-        "&json_id=dohvati_id_drugog_korisnika",
-    }).then(
-      function (response) {
-        $scope.drugi_korisnik_info = response.data;
-        localStorage.setItem(
-          "drugi_korisnik",
-          JSON.stringify($scope.drugi_korisnik_info)
-        );
-        $location.path("/drugi_user");
-      },
-      function (error) {
-        console.log(error);
-      }
-    );
-  };
-  $scope.PrikaziDrugiUserProfile = function () {
-    $timeout(function () {
-      $scope.drugi_korisnik = JSON.parse(
-        localStorage.getItem("drugi_korisnik")
-      );
-    }, 400);
-  };
-
-  // Novi zadatak
 
   $scope.NoviZadatak = function () {
     $scope.alertMsg = true;
@@ -289,7 +247,6 @@ oModul.controller("glavniController", function (
         $scope.alertMessage =
           "Datum početka ne smije biti veći od datuma završetka!";
       } else {
-        // uzeti id od izvrsitelja umjesto korisnickog imena
         DajIdOdabranogKorisnika($scope.regIzvrsitelj);
         var oData = {
           action_id: "novi_zadatak",
@@ -312,10 +269,6 @@ oModul.controller("glavniController", function (
       }
     }
   };
-  function uspjesnoDodavanje() {
-    $scope.closeModalNoviZadatak();
-    $window.location.reload();
-  }
   function DajIdOdabranogKorisnika(username) {
     var key_prev_iteracije;
     angular.forEach($scope.korisnici, function (value, key) {
@@ -337,18 +290,23 @@ oModul.controller("glavniController", function (
       }
     });
   }
+  function uspjesnoDodavanje() {
+    $scope.closeModalNoviZadatak();
+    $window.location.reload();
+  }
 
-  // Brisanje zadatka
-
+  // Obrisi zadatak
   $scope.openModalObrsiZadatak = function () {
     var modal_popup = angular.element("#modalObrsiZadatak");
     modal_popup.modal("show");
     $scope.naziv_zadatka = $scope.zadatak.naziv;
   };
+
   $scope.closeModalObrisiZadatak = function () {
     var modal_popup = angular.element("#modalObrsiZadatak");
     modal_popup.modal("hide");
   };
+
   $scope.ObrisiZadatakModal = function () {
     $scope.openModalObrsiZadatak();
   };
@@ -371,12 +329,10 @@ oModul.controller("glavniController", function (
     });
   };
 
-  // Uredivanje zadatka
-
+  // Uredi zadatak
   $scope.openModalUrediZadatak = function () {
     var modal_popup = angular.element("#modalUrediZadatak");
     modal_popup.modal("show");
-
     $scope.edit_id = $scope.zadatak.id;
     $scope.edit_naziv = $scope.zadatak.naziv;
     $scope.edit_datum_pocetka = new Date($scope.zadatak.datum_pocetka);
@@ -384,10 +340,12 @@ oModul.controller("glavniController", function (
     $scope.edit_izvrsitelj = $scope.zadatak.izvrsitelj;
     $scope.edit_opis = $scope.zadatak.opis;
   };
+
   $scope.closeModalUrediZadatak = function () {
     var modal_popup = angular.element("#modalUrediZadatak");
     modal_popup.modal("hide");
   };
+
   $scope.UrediZadatakModal = function () {
     $scope.openModalUrediZadatak();
   };
@@ -432,17 +390,18 @@ oModul.controller("glavniController", function (
     }
   };
 
-  // Oznacavanje zadatka kao dovrsenog
-
+  // Dovrsi zadatak
   $scope.openModalDovrsenZadatak = function () {
     var modal_popup = angular.element("#modalDovrsenZadatak");
     modal_popup.modal("show");
     $scope.naziv_zadatka = $scope.zadatak.naziv;
   };
+
   $scope.closeModalDovrsenZadatak = function () {
     var modal_popup = angular.element("#modalDovrsenZadatak");
     modal_popup.modal("hide");
   };
+
   $scope.DovrsenZadatakModal = function () {
     $scope.openModalDovrsenZadatak();
   };
@@ -465,8 +424,11 @@ oModul.controller("glavniController", function (
     });
   };
 
-  // Dohvacanje mojih zadataka
+  // ----------------------------------------------------------------------------- >>
+  // ----------------------------------------------------------------------------- >> Dohvacanje zadataka
+  // ----------------------------------------------------------------------------- >>
 
+  // Dohvacanje mojih zadataka
   $scope.dohvatiMojeZadatke = function () {
     $timeout(function () {
       $http({
@@ -487,7 +449,6 @@ oModul.controller("glavniController", function (
   };
 
   // Dohvacanje kreiranih zadataka
-
   $scope.dohvatiKreiraneZadatke = function () {
     $timeout(function () {
       $http({
@@ -507,13 +468,27 @@ oModul.controller("glavniController", function (
     }, 300);
   };
 
-  // Otvaranje zasebnog zadatka
-
-  $scope.OtvoriZasebniZadatak = function (id_zadatka) {
-    localStorage.setItem("zadatak", JSON.stringify(id_zadatka));
-
-    $location.path("/pregled_zadatka");
+  // Dohvacanje dovrsenih zadataka
+  $scope.dohvatiDovrseneZadatke = function () {
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url:
+          "json.php?korisnik_id=" +
+          $rootScope.korisnik +
+          "&json_id=dohvati_dovrsene_zadatke",
+      }).then(
+        function (response) {
+          $scope.zadaci = response.data;
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 300);
   };
+
+  // Otvaranje zasebnog kreiranog zadatka
   $scope.OtvoriZasebniKreiraniZadatak = function (id_zadatka) {
     localStorage.setItem("zadatak", JSON.stringify(id_zadatka));
 
@@ -537,7 +512,7 @@ oModul.controller("glavniController", function (
           console.log($scope.zadatak);
 
           if ($scope.zadatak.stanje == 0) {
-            $scope.zadatak_stanje = "Nedovršen"; // drugi scope staviti kako bi se na stranici mogao napraviti orderBy po stanju..
+            $scope.zadatak_stanje = "Nedovršen";
           } else {
             $scope.zadatak_stanje = "Dovršen";
           }
@@ -548,6 +523,14 @@ oModul.controller("glavniController", function (
       );
     }, 200);
   };
+
+  // Otvaranje zasebnog zadatka
+  $scope.OtvoriZasebniZadatak = function (id_zadatka) {
+    localStorage.setItem("zadatak", JSON.stringify(id_zadatka));
+
+    $location.path("/pregled_zadatka");
+  };
+
   $scope.PrikaziZasebniZadatak = function () {
     $scope.id_zadatka = JSON.parse(localStorage.getItem("zadatak"));
     $timeout(function () {
@@ -577,8 +560,11 @@ oModul.controller("glavniController", function (
     }, 200);
   };
 
-  // Dohvacanje korisnika
+  // ----------------------------------------------------------------------------- >>
+  // ----------------------------------------------------------------------------- >> Dohvacanje korisnika
+  // ----------------------------------------------------------------------------- >>
 
+  // Dohvati korisnike
   $scope.DohvatiKorisnike = function () {
     var korisnicka_imena = [];
     $timeout(function () {
@@ -604,8 +590,63 @@ oModul.controller("glavniController", function (
     }, 300);
   };
 
-  // Sortiranje
+  // Dohvati korisnika preko id-a
+  $scope.PrikaziUserProfile = function () {
+    $scope.korisnik = JSON.parse(localStorage.getItem("korisnik"));
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url:
+          "json.php?korisnik_id=" +
+          $scope.korisnik +
+          "&json_id=dohvati_korisnika",
+      }).then(
+        function (response) {
+          $scope.korisnik_info = response.data;
+          //console.log($scope.korisnik_info[0].bio);
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 300);
+  };
 
+  // Dohvati drugog korisnika preko username-a
+  $scope.DohvatiDrugogKorisnika = function (korisnik) {
+    $http({
+      method: "GET",
+      url:
+        "json.php?korisnik_username=" +
+        korisnik +
+        "&json_id=dohvati_id_drugog_korisnika",
+    }).then(
+      function (response) {
+        $scope.drugi_korisnik_info = response.data;
+        localStorage.setItem(
+          "drugi_korisnik",
+          JSON.stringify($scope.drugi_korisnik_info)
+        );
+        $location.path("/drugi_user");
+      },
+      function (error) {
+        console.log(error);
+      }
+    );
+  };
+  $scope.PrikaziDrugiUserProfile = function () {
+    $timeout(function () {
+      $scope.drugi_korisnik = JSON.parse(
+        localStorage.getItem("drugi_korisnik")
+      );
+    }, 400);
+  };
+
+  // ----------------------------------------------------------------------------- >>
+  // ----------------------------------------------------------------------------- >> Sortiranje
+  // ----------------------------------------------------------------------------- >>
+
+  // Sortiranje
   $scope.orderProperty = "id";
   $scope.setOrderProperty = function (propertyName) {
     if ($scope.orderProperty === propertyName) {
@@ -617,23 +658,27 @@ oModul.controller("glavniController", function (
     }
   };
 
-  // Modali za postavke ------------------------------------------------------------------------------------>>
+  // ----------------------------------------------------------------------------- >>
+  // ----------------------------------------------------------------------------- >> Postavke
+  // ----------------------------------------------------------------------------- >>
 
   // Avatar
-
   $scope.openModalAvatar = function () {
     var modal_popup = angular.element("#promjeni_avatar");
     $scope.new_avatar = "";
     modal_popup.modal("show");
   };
+
   $scope.OdabirAvataraModal = function () {
     $scope.openModalAvatar();
   };
+
   $scope.novi_avatar = function (putanja, slovo) {
     console.log(slovo + " " + putanja);
     $scope.new_avatar = slovo;
     $scope.putanja_do_avatara = putanja;
   };
+
   $scope.SpremiAvatara = function () {
     if ($scope.new_avatar == "") {
       alert("Niste označili niti jednog avatara..");
@@ -656,15 +701,16 @@ oModul.controller("glavniController", function (
   };
 
   // Korisnicko ime
-
   $scope.openModalKorisnickoIme = function () {
     var modal_popup = angular.element("#promjeni_korisnicko_ime");
     $scope.new_korisnicko_ime = $scope.korisnik_info[0].korisnicko_ime;
     modal_popup.modal("show");
   };
+
   $scope.PromjeniKorisnickoIme = function () {
     $scope.openModalKorisnickoIme();
   };
+
   $scope.SpremiKorisnickoIme = function () {
     if ($scope.new_korisnicko_ime == "") {
       alert("Korisničko ime je obavezno!");
@@ -692,9 +738,11 @@ oModul.controller("glavniController", function (
     $scope.new_ime = $scope.korisnik_info[0].ime;
     modal_popup.modal("show");
   };
+
   $scope.PromjeniIme = function () {
     $scope.openModalIme();
   };
+
   $scope.SpremiIme = function () {
     if ($scope.new_ime == "") {
       alert("Ime je obavezno!");
@@ -722,9 +770,11 @@ oModul.controller("glavniController", function (
     $scope.new_prezime = $scope.korisnik_info[0].prezime;
     modal_popup.modal("show");
   };
+
   $scope.PromjeniPrezime = function () {
     $scope.openModalPrezime();
   };
+
   $scope.SpremiPrezime = function () {
     if ($scope.new_prezime == "") {
       alert("Prezime je obavezno!");
@@ -752,9 +802,11 @@ oModul.controller("glavniController", function (
     $scope.new_email = $scope.korisnik_info[0].email;
     modal_popup.modal("show");
   };
+
   $scope.PromjeniEmail = function () {
     $scope.openModalEmail();
   };
+
   $scope.SpremiEmail = function () {
     $scope.alertMsg = true;
     if ($scope.new_email == "") {
@@ -779,15 +831,17 @@ oModul.controller("glavniController", function (
     }
   };
 
-  // Tel
+  // Telefon
   $scope.openModalTel = function () {
     var modal_popup = angular.element("#promjeni_tel");
     $scope.new_tel = $scope.korisnik_info[0].tel;
     modal_popup.modal("show");
   };
+
   $scope.PromjeniTel = function () {
     $scope.openModalTel();
   };
+
   $scope.SpremiTel = function () {
     var oData = {
       action_id: "promjeni_tel",
@@ -811,9 +865,11 @@ oModul.controller("glavniController", function (
     $scope.new_prebivaliste = $scope.korisnik_info[0].prebivaliste;
     modal_popup.modal("show");
   };
+
   $scope.PromjeniPrebivaliste = function () {
     $scope.openModalPrebivaliste();
   };
+
   $scope.SpremiPrebivaliste = function () {
     var oData = {
       action_id: "promjeni_prebivaliste",
@@ -831,15 +887,17 @@ oModul.controller("glavniController", function (
     });
   };
 
-  // Bio
+  // Biografija
   $scope.openModalBio = function () {
     var modal_popup = angular.element("#promjeni_bio");
     $scope.new_bio = $scope.korisnik_info[0].bio;
     modal_popup.modal("show");
   };
+
   $scope.PromjeniBio = function () {
     $scope.openModalBio();
   };
+
   $scope.SpremiBio = function () {
     var oData = {
       action_id: "promjeni_bio",
@@ -857,15 +915,17 @@ oModul.controller("glavniController", function (
     });
   };
 
-  // DatumRodenja
+  // Datum rodenja
   $scope.openModalDatumRodenja = function () {
     var modal_popup = angular.element("#promjeni_datum_rodenja");
     $scope.new_datum_rodenja = new Date($scope.korisnik_info[0].datum_rodenja);
     modal_popup.modal("show");
   };
+
   $scope.PromjeniDatumRodenja = function () {
     $scope.openModalDatumRodenja();
   };
+
   $scope.SpremiDatumRodenja = function (obrisiILIuredi) {
     if (obrisiILIuredi == "obrisi") {
       $scope.new_datum_rodenja = "obrisi";
@@ -892,10 +952,12 @@ oModul.controller("glavniController", function (
     $scope.new_spol = "";
     modal_popup.modal("show");
   };
+
   $scope.novi_spol = function (vrijednost) {
     console.log(vrijednost);
     $scope.new_spol = vrijednost;
   };
+
   $scope.SpremiSpol = function () {
     if ($scope.new_spol == "") {
       alert("Niste ništa označili..");
@@ -918,6 +980,7 @@ oModul.controller("glavniController", function (
   };
 });
 
+// Filter za skracivanje opisa zadatka
 oModul.filter("strLimit", [
   "$filter",
   function ($filter) {
@@ -932,6 +995,7 @@ oModul.filter("strLimit", [
   },
 ]);
 
+// Filter za promjenu formata datuma
 oModul.filter("promjenaFormata", function () {
   return function (datum) {
     datum = datum.replace(/-/g, ".");
