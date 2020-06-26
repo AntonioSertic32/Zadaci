@@ -470,16 +470,24 @@ oModul.controller("glavniController", function (
 
   // Dohvacanje dovrsenih zadataka
   $scope.dohvatiDovrseneZadatke = function () {
+    if ($scope.tip == undefined) {
+      $scope.nesto = "izvrsitelj";
+    } else {
+      $scope.nesto = $scope.tip;
+    }
     $timeout(function () {
       $http({
         method: "GET",
         url:
           "json.php?korisnik_id=" +
           $rootScope.korisnik +
-          "&json_id=dohvati_dovrsene_zadatke",
+          "&json_id=dohvati_dovrsene_zadatke&tip_pretrage=" +
+          $scope.nesto,
       }).then(
         function (response) {
           $scope.zadaci = response.data;
+
+          console.log(response.data);
         },
         function (error) {
           console.log(error);
@@ -656,6 +664,21 @@ oModul.controller("glavniController", function (
     } else {
       $scope.orderProperty = propertyName;
     }
+  };
+
+  $scope.tip_pretrage = "Moji zadaci";
+  $scope.setTipPretrage = function (tip) {
+    // izvrsitelj / kreator
+    if (tip == "izvrsitelj") {
+      $scope.tip_pretrage = "Moji zadaci";
+      $scope.tip = "izvrsitelj";
+    } else {
+      $scope.tip_pretrage = "Kreirani zadaci";
+      $scope.tip = "kreator";
+    }
+
+    $scope.dohvatiDovrseneZadatke();
+    //console.log(tip);
   };
 
   // ----------------------------------------------------------------------------- >>

@@ -63,7 +63,7 @@
   <!-- Izbornik -->
   <div class="izbornik d-flex justify-content-sm-around">
     <!-- Trazilica -->
-    <div class="d-inline-block form-group has-search w-50">
+    <div class="d-inline-block form-group has-search w-40">
       <span class="fa fa-search form-control-feedback"></span>
       <input
         type="text"
@@ -71,6 +71,27 @@
         placeholder="Pretraži.."
         ng-model="inputTekst"
       />
+    </div>
+    <!-- Sortiranje po moji/kreirani -->
+    <div class="d-inline-block dropdown">
+      <button
+        class="btn btn-dark dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        {{tip_pretrage}}
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="" ng-click="setTipPretrage('izvrsitelj')"
+          >Moji zadaci</a
+        >
+        <a class="dropdown-item" href="" ng-click="setTipPretrage('kreator')"
+          >Kreirani zadaci</a
+        >
+      </div>
     </div>
     <!-- Sortiranje -->
     <div class="d-inline-block dropdown">
@@ -163,7 +184,7 @@
                   href=""
                   ng-click="OtvoriZasebniZadatak(zadatak.id)"
                   class="btn btn-dark"
-                >
+                  ><!-- posalje se jos jedan parametar koji ce reci da li je dovrsen -->
                   <i class="fa fa-plus" aria-hidden="true"></i>
                 </a>
               </div>
