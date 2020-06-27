@@ -112,6 +112,10 @@ a {
   margin: 50px auto;
   width: 50%;
 }
+.izbornik_kreirani {
+  margin: 50px auto;
+  width: 60%;
+}
 .has-search .form-control {
   padding-left: 2.375rem;
 }

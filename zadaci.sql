@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 18, 2020 at 08:04 PM
+-- Generation Time: Jun 27, 2020 at 05:04 PM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.3
 
@@ -62,9 +62,10 @@ CREATE TABLE `korisnik` (
 --
 
 INSERT INTO `korisnik` (`id`, `ime`, `prezime`, `lozinka`, `email`, `korisnicko_ime`, `slika`, `tel`, `bio`, `prebivaliste`, `datum_rodenja`, `spol`) VALUES
-(1, 'Mirko', 'Mirkić', 'a', 'a', 'Mirkec', 'doctor.png', '091785123', 'Imam 18 godina i dolazim iz Dubrovnika. Studiram računarstvo na VSMTI i u slobodno vrijeme volim fotografirati.', 'Dubrovnik', '4/5/2002', 'Muško'),
-(2, 'Darko', 'Darkić', 'b', 'b', 'Darkec', 'doctor.png', '092741236', 'Ja sam novi ovdje ;)', 'Osijek', '9/10/1998', 'Muško'),
-(3, 'Slavko', 'Slavkić', 'c', 'c', 'Slavkec', 'doctor.png', '093963258', '', 'Zagreb', '6/6/1991', 'Muško');
+(1, 'Mirko', 'Mirkić', 'a', 'a', 'Mirkec', '4.jpg', '0917851234', 'Imam 18 godina i dolazim iz Dubrovnika. Studiram računarstvo na VSMTI i u slobodno vrijeme volim fotografirati. Imam najbolju sestru!', 'Dubrovnik', '2002-05-03T23:00:00.000Z', NULL),
+(2, 'Darko', 'Darkić', 'b', 'b', 'Darkec', '2.jpg', '092741236', 'Ja sam novi ovdje ;)', 'Osijek', '1998-10-09T22:00:00.000Z', 'Muško'),
+(3, 'Slavko', 'Slavkić', 'c', 'c', 'Slavkec', '3.jpg', '093963258', NULL, 'Zagreb', '1991-12-10T22:00:00.000Z', 'Muško'),
+(13, 'Judita', 'Lijić', 'd', 'd', 'Judica', '7.jpg', NULL, NULL, 'Varaždin', NULL, 'Žensko');
 
 -- --------------------------------------------------------
 
@@ -88,13 +89,15 @@ CREATE TABLE `zadatak` (
 --
 
 INSERT INTO `zadatak` (`id`, `naziv`, `datum_pocetka`, `datum_zavrsetka`, `izvrsitelj`, `kreator`, `stanje`, `opis`) VALUES
-(1, 'Spremiti sobu', '2020-06-01T22:00:00.000Z', '2020-06-03T22:00:00.000Z', 2, 1, 0, 'Spremiti robu u sobi.'),
+(1, 'Spremiti sobu', '2020-06-01T22:00:00.000Z', '2020-06-03T22:00:00.000Z', 2, 1, 1, 'Spremiti robu u sobi.'),
 (2, 'Oprat suđe', '2020-05-27T22:00:00.000Z', '2020-05-28T22:00:00.000Z', 3, 1, 0, 'Oprati svo suđe.'),
 (3, 'Odvesti sestru u grad', '2020-06-01T22:00:00.000Z', '2020-06-01T22:00:00.000Z', 1, 3, 0, 'Odvesti sestru u grad oko 18h i na povratku natrag skrenuti u pekaru po kruh.'),
-(8, 'Dovršiti ovaj projekt', '2020-06-12T22:00:00.000Z', '2020-06-13T22:00:00.000Z', 1, 1, 0, 'Doraditi Postavke za korisnički račun preko modala te također dodati opciju odabira avatara kao slike profila. Urediti pregled_zadatka.html. Dodavanje komentara ostavljam za kraj jer ne bi trebali biti teški.'),
-(11, 'Oguliti krumpire', '2020-06-16T22:00:00.000Z', '2020-06-16T22:00:00.000Z', 1, 3, 0, 'Oguliti cca 20 kom krumpira za ručak.'),
+(8, 'Dovršiti ovaj projekt', '2020-06-12T22:00:00.000Z', '2020-06-13T22:00:00.000Z', 2, 1, 1, 'Doraditi Postavke za korisnički račun preko modala te također dodati opciju odabira avatara kao slike profila. Urediti pregled_zadatka.html. Dodavanje komentara ostavljam za kraj jer ne bi trebali biti teški.'),
+(11, 'Oguliti krumpire', '2020-06-16T22:00:00.000Z', '2020-06-16T22:00:00.000Z', 1, 3, 1, 'Oguliti cca 20 kom krumpira za ručak.'),
 (28, 'Pokositi travu', '2020-06-18T15:37:35.757Z', '2020-06-18T15:37:35.757Z', 2, 1, 0, 'Pokositi travu iza kuće.'),
-(29, 'Bla', '2020-06-18T15:40:32.812Z', '2020-06-18T15:40:32.812Z', 3, 2, 0, 'Bla Bla li');
+(29, 'Bla', '2020-06-18T15:40:32.812Z', '2020-06-18T15:40:32.812Z', 3, 2, 0, 'Bla Bla li'),
+(54, 'Učiti baze', '2020-06-25T07:43:32.316Z', '2020-06-25T07:43:32.316Z', 1, 3, 1, 'Učiti za ispit iz baza podataka.'),
+(55, 'Oprati auto', '2020-08-13T08:14:37.901Z', '2020-08-13T08:14:37.901Z', 3, 2, 1, 'Oprati auto izvana i iznutra.');
 
 --
 -- Indexes for dumped tables
@@ -132,13 +135,13 @@ ALTER TABLE `komentar`
 -- AUTO_INCREMENT for table `korisnik`
 --
 ALTER TABLE `korisnik`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `zadatak`
 --
 ALTER TABLE `zadatak`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

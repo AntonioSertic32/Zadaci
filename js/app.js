@@ -17,6 +17,14 @@ oModul.config(function ($routeProvider) {
     templateUrl: "templates/pregled_zadatka.html",
     controller: "glavniController",
   });
+  $routeProvider.when("/moji_zadaci_dovrseni", {
+    templateUrl: "templates/moji_zadaci_dovrseni.html",
+    controller: "glavniController",
+  });
+  $routeProvider.when("/kreirani_zadaci_dovrseni", {
+    templateUrl: "templates/kreirani_zadaci_dovrseni.html",
+    controller: "glavniController",
+  });
 
   $routeProvider.when("/kreirani_zadaci", {
     templateUrl: "templates/kreirani_zadaci.html",
@@ -27,10 +35,6 @@ oModul.config(function ($routeProvider) {
     controller: "glavniController",
   });
 
-  $routeProvider.when("/dovrseni_zadaci", {
-    templateUrl: "templates/dovrseni_zadaci.html",
-    controller: "glavniController",
-  });
   $routeProvider.when("/kalendar", {
     templateUrl: "templates/kalendar.html",
     controller: "glavniController",
@@ -470,19 +474,35 @@ oModul.controller("glavniController", function (
 
   // Dohvacanje dovrsenih zadataka
   $scope.dohvatiDovrseneZadatke = function () {
-    if ($scope.tip == undefined) {
-      $scope.nesto = "izvrsitelj";
-    } else {
-      $scope.nesto = $scope.tip;
-    }
     $timeout(function () {
       $http({
         method: "GET",
         url:
           "json.php?korisnik_id=" +
           $rootScope.korisnik +
-          "&json_id=dohvati_dovrsene_zadatke&tip_pretrage=" +
-          $scope.nesto,
+          "&json_id=dohvati_dovrsene_zadatke",
+      }).then(
+        function (response) {
+          $scope.zadaci = response.data;
+
+          console.log(response.data);
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 300);
+  };
+
+  // Dohvacanje dovrsenih kreiranih zadataka
+  $scope.dohvatiDovrseneKreiraneZadatke = function () {
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url:
+          "json.php?korisnik_id=" +
+          $rootScope.korisnik +
+          "&json_id=dohvati_dovrsene_kreirane_zadatke",
       }).then(
         function (response) {
           $scope.zadaci = response.data;
@@ -666,19 +686,18 @@ oModul.controller("glavniController", function (
     }
   };
 
-  $scope.tip_pretrage = "Moji zadaci";
-  $scope.setTipPretrage = function (tip) {
-    // izvrsitelj / kreator
-    if (tip == "izvrsitelj") {
-      $scope.tip_pretrage = "Moji zadaci";
-      $scope.tip = "izvrsitelj";
-    } else {
-      $scope.tip_pretrage = "Kreirani zadaci";
-      $scope.tip = "kreator";
-    }
+  $scope.goToDovrseni = function () {
+    $location.path("/moji_zadaci_dovrseni");
+  };
+  $scope.goToObicni = function () {
+    $location.path("/moji_zadaci");
+  };
 
-    $scope.dohvatiDovrseneZadatke();
-    //console.log(tip);
+  $scope.goToKreiraniDovrseni = function () {
+    $location.path("/kreirani_zadaci_dovrseni");
+  };
+  $scope.goToKreirani = function () {
+    $location.path("/kreirani_zadaci");
   };
 
   // ----------------------------------------------------------------------------- >>
@@ -1000,6 +1019,19 @@ oModul.controller("glavniController", function (
         }
       });
     }
+  };
+
+  // ----------------------------------------------------------------------------- >>
+  // ----------------------------------------------------------------------------- >> Komentiranje
+  // ----------------------------------------------------------------------------- >>
+
+  $scope.openModalKomentiranje = function () {
+    var modal_popup = angular.element("#modalKomentiranje");
+    modal_popup.modal("show");
+  };
+
+  $scope.modalKomentiranje = function () {
+    $scope.openModalKomentiranje();
   };
 });
 

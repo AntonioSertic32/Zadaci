@@ -18,19 +18,17 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#!moji_zadaci"
-          >Moji zadaci<span class="sr-only">(current)</span></a
-        >
-      </li>
       <li class="nav-item">
-        <a class="nav-link" href="#!kreirani_zadaci">Kreirani zadaci</a>
+        <a class="nav-link" href="#!moji_zadaci">Moji zadaci</a>
+      </li>
+      <li class="nav-item active">
+        <a class="nav-link" href="#!kreirani_zadaci">Kreirani zadaci</a
+        ><span class="sr-only">(current)</span>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="#!kalendar">Kalendar</a>
       </li>
     </ul>
-
     <div class="dropdown">
       <button
         class="btn btn-warning dropdown-toggle"
@@ -56,9 +54,9 @@
   </div>
 </nav>
 
-<div class="sredinaUser" ng-init="dohvatiMojeZadatke()">
+<div class="sredinaUser" ng-init="dohvatiDovrseneKreiraneZadatke()">
   <!-- Izbornik -->
-  <div class="izbornik d-flex justify-content-sm-around">
+  <div class="izbornik_kreirani d-flex justify-content-sm-around">
     <!-- Trazilica -->
     <div class="d-inline-block form-group has-search w-40">
       <span class="fa fa-search form-control-feedback"></span>
@@ -69,7 +67,18 @@
         ng-model="inputTekst"
       />
     </div>
-    <!-- Sortiranje po moji/dovrseni -->
+    <!-- Novi zadatak -->
+    <div class="noviZadatak">
+      <button
+        type="d-inline-block button"
+        class="btn btn-dark"
+        ng-click="ModalNoviZadatak()"
+      >
+        <i class="fa fa-thumb-tack fa-lg"></i>
+      </button>
+      <p class="d-inline-block">Novi zadatak</p>
+    </div>
+    <!-- Sortiranje po kreirani/dovrseni -->
     <div class="d-inline-block dropdown">
       <button
         class="btn btn-dark dropdown-toggle"
@@ -79,11 +88,11 @@
         aria-haspopup="true"
         aria-expanded="false"
       >
-        Moji zadaci
+        Dovršeni zadaci
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="" ng-click="goToDovrseni()"
-          >Dovršeni zadaci</a
+        <a class="dropdown-item" href="" ng-click="goToKreirani()"
+          >Kreirani zadaci</a
         >
       </div>
     </div>
@@ -131,7 +140,7 @@
       >
         <div
           class="text-center"
-          style="width: 25rem; height: 335px;"
+          style="width: 25rem; height: 320px;"
           ng-class="{'card': zadatak.stanje == 0, 'card-dovrsen':  zadatak.stanje == 1}"
         >
           <div class="card-body">
@@ -143,20 +152,10 @@
 
             <div class="row justify-content-center">
               <div class="col-10 zadatak_datumi">
-                {{zadatak.datum_pocetka | date: 'dd-MM-yyyy' | promjenaFormata
-                }}
+                {{zadatak.datum_pocetka | date: 'dd-MM-yyyy' | promjenaFormata}}
                 <i class="fa fa-arrow-right datum_arrow" aria-hidden="true"></i>
-                {{zadatak.datum_zavrsetka | date: 'dd-MM-yyyy' | promjenaFormata
-                }}
-              </div>
-            </div>
-
-            <div class="row justify-content-start">
-              <div class="zadatak_kreator">
-                Kreator:
-                <a href="" ng-click="DohvatiDrugogKorisnika(zadatak.kreator)"
-                  >{{zadatak.kreator}}</a
-                >
+                {{zadatak.datum_zavrsetka | date: 'dd-MM-yyyy' |
+                promjenaFormata}}
               </div>
             </div>
 
@@ -172,11 +171,20 @@
               </div>
             </div>
 
+            <div class="row justify-content-start">
+              <div class="zadatak_izvrsitelj">
+                Izvrsitelj:
+                <a href="" ng-click="DohvatiDrugogKorisnika(zadatak.izvrsitelj)"
+                  >{{zadatak.izvrsitelj}}</a
+                >
+              </div>
+            </div>
+
             <div class="row justify-content-end">
-              <div class="col-3 zadatak_button">
+              <div class="col-3">
                 <a
                   href=""
-                  ng-click="OtvoriZasebniZadatak(zadatak.id)"
+                  ng-click="OtvoriZasebniKreiraniZadatak(zadatak.id)"
                   class="btn btn-dark"
                 >
                   <i class="fa fa-plus" aria-hidden="true"></i>
@@ -205,3 +213,95 @@
     </div>
   </div>
 </footer>
+
+<!-- Modal novi zadatak -->
+<div class="modal fade" id="modalNoviZadatak">
+  <div class="modal-dialog modal-lg" ng-init="DohvatiKorisnike()">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title w-100 text-center">Novi zadatak</h4>
+        <button type="button" class="close" data-dismiss="modal">
+          &times;
+        </button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div
+          class="alert {{alertClass}} alert-dismissible text-center"
+          ng-show="alertMsg"
+        >
+          <a href="" class="close" ng-click="closeMsg()" aria-label="close"
+            >&times;</a
+          >{{alertMessage}}
+        </div>
+
+        <form name="NoviZadatakForm" method="POST">
+          <div class="form-group">
+            <label for="inputNaziv">Naziv</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputNaziv"
+              placeholder="Naziv"
+              ng-model="regNaziv"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputDatumPocetka">Datum početka</label>
+            <input
+              type="date"
+              class="form-control"
+              id="inputDatumPocetka"
+              ng-model="regDatumPocetka"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputDatumZavrsetka">Datum završetka</label>
+            <input
+              type="date"
+              class="form-control"
+              id="inputDatumZavrsetka"
+              ng-model="regDatumZavrsetka"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="inputIzvrsitelj">Izvršitelj</label>
+            <select
+              class="form-control"
+              id="inputIzvrsitelj"
+              ng-model="regIzvrsitelj"
+              style="height: 40px;"
+              ng-options="korisnicko_ime for korisnicko_ime in korisnicka_imena"
+            >
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="inputOpis">Opis</label>
+            <input
+              type="text"
+              class="form-control"
+              id="inputOpis"
+              placeholder="Opis"
+              ng-model="regOpis"
+            />
+          </div>
+        </form>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="submit" ng-click="NoviZadatak()" class="btn btn-dark">
+          Dodaj
+        </button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">
+          Zatvori
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

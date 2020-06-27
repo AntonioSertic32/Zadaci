@@ -236,13 +236,10 @@ class UpravljanjeZadacima {
     }
 
     //Dohvacanje dovrsenih zadataka
-    public function DohvatiDovrseneZadatke($tip_pretrage)
+    public function DohvatiDovrseneZadatke()
     {
-        if($tip_pretrage == 'izvrsitelj') {
-            $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelj, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelj=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id WHERE zadatak.izvrsitelj=$this->userId AND zadatak.stanje=1"; //(zadatak.izvrsitelj=$this->userId OR zadatak.kreator=$this->userId)
-        }else {
-            $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelj, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelj=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id WHERE zadatak.kreator=$this->userId AND zadatak.stanje=1"; //(zadatak.izvrsitelj=$this->userId OR zadatak.kreator=$this->userId)
-        }
+        $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelj, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelj=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id WHERE zadatak.izvrsitelj=$this->userId AND zadatak.stanje=1";
+        
         
         $oRecord = $this->connection->query($sQuery);
         while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
@@ -259,6 +256,28 @@ class UpravljanjeZadacima {
             array_push($this->zadaci, $oZadaci);
         }
     }
+
+    //Dohvacanje dovrsenih kreiranih zadataka
+    public function DohvatiDovrseneKreiraneZadatke()
+    {
+        $sQuery = "SELECT zadatak.id, zadatak.naziv, zadatak.datum_pocetka, zadatak.datum_zavrsetka, k1.korisnicko_ime as izvrsitelj, k2.korisnicko_ime as kreator, zadatak.stanje, zadatak.opis FROM zadatak LEFT JOIN korisnik k1 ON zadatak.izvrsitelj=k1.id LEFT JOIN korisnik k2 ON zadatak.kreator=k2.id WHERE zadatak.kreator=$this->userId AND zadatak.stanje=1";
+        
+        $oRecord = $this->connection->query($sQuery);
+        while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
+            $oZadaci = new Zadatak(
+                $oRow['id'],
+                $oRow['naziv'],
+                $oRow['datum_pocetka'],
+                $oRow['datum_zavrsetka'],
+                $oRow['izvrsitelj'],
+                $oRow['kreator'],
+                $oRow['stanje'],
+                $oRow['opis']
+            );
+            array_push($this->zadaci, $oZadaci);
+        }
+    }
+    
     public function IspisiZadatke()
     {
         header('Content-type: charset=ISO-8859-1');

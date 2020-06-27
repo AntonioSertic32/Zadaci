@@ -56,7 +56,7 @@
   </div>
 </nav>
 
-<div class="sredinaUser" ng-init="dohvatiMojeZadatke()">
+<div class="sredinaUser" ng-init="dohvatiDovrseneZadatke()">
   <!-- Izbornik -->
   <div class="izbornik d-flex justify-content-sm-around">
     <!-- Trazilica -->
@@ -79,12 +79,10 @@
         aria-haspopup="true"
         aria-expanded="false"
       >
-        Moji zadaci
+        Dovršeni zadaci
       </button>
       <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <a class="dropdown-item" href="" ng-click="goToDovrseni()"
-          >Dovršeni zadaci</a
-        >
+        <a class="dropdown-item" href="" ng-click="goToObicni()">Moji zadaci</a>
       </div>
     </div>
     <!-- Sortiranje -->

@@ -46,9 +46,15 @@ switch ($sJsonID) {
     case 'dohvati_dovrsene_zadatke':
         
         $upravljanjeZadacima = new UpravljanjeZadacima($userId);
-        $upravljanjeZadacima -> DohvatiDovrseneZadatke($tip_pretrage);
+        $upravljanjeZadacima -> DohvatiDovrseneZadatke();
         echo $upravljanjeZadacima -> IspisiZadatke();
 
+    break;
+
+    case 'dohvati_dovrsene_kreirane_zadatke':
+        $upravljanjeZadacima = new UpravljanjeZadacima($userId);
+        $upravljanjeZadacima -> DohvatiDovrseneKreiraneZadatke();
+        echo $upravljanjeZadacima -> IspisiZadatke();
     break;
 
     // Dohvacanje zasebnih zadataka

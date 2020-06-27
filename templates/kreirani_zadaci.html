@@ -26,9 +26,6 @@
         ><span class="sr-only">(current)</span>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#!dovrseni_zadaci">Dovršeni zadaci</a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" href="#!kalendar">Kalendar</a>
       </li>
     </ul>
@@ -59,7 +56,7 @@
 
 <div class="sredinaUser" ng-init="dohvatiKreiraneZadatke()">
   <!-- Izbornik -->
-  <div class="izbornik d-flex justify-content-sm-around">
+  <div class="izbornik_kreirani d-flex justify-content-sm-around">
     <!-- Trazilica -->
     <div class="d-inline-block form-group has-search w-40">
       <span class="fa fa-search form-control-feedback"></span>
@@ -80,6 +77,24 @@
         <i class="fa fa-thumb-tack fa-lg"></i>
       </button>
       <p class="d-inline-block">Novi zadatak</p>
+    </div>
+    <!-- Sortiranje po kreirani/dovrseni -->
+    <div class="d-inline-block dropdown">
+      <button
+        class="btn btn-dark dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Kreirani zadaci
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a class="dropdown-item" href="" ng-click="goToKreiraniDovrseni()"
+          >Dovršeni zadaci</a
+        >
+      </div>
     </div>
     <!-- Sortiranje -->
     <div class="d-inline-block dropdown">
