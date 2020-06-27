@@ -336,7 +336,8 @@ a {
 /* ------------------------------------------------------------------------------------------------------- Mainly pregled_zadatka.html  */
 /* -------------------------------------------------------------------------------------------------------   */
 
-.container-zadatak {
+.container-zadatak,
+.container-komentar {
   width: 850px;
   margin: 0 auto;
 
@@ -366,4 +367,33 @@ a {
   font-size: 35px;
   text-shadow: 1.5px 1.5px 2px #474747;
   margin-bottom: 40px;
+}
+
+/* -------------------------------------------------------------------------------------------------------   */
+/* ------------------------------------------------------------------------------------------------------- Komentari  */
+/* -------------------------------------------------------------------------------------------------------   */
+
+.komentar_kreator {
+  font-weight: 700;
+}
+.komentar_kreator a {
+  color: #222;
+}
+.komentar_kreator a:hover {
+  color: #3f613d;
+  text-shadow: 2px 2px 1px #e4f3ad;
+}
+
+.komentar_opis {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.card_komentar {
+  margin-left: 70px;
+  margin-bottom: 40px;
+  background-color: #a3e08e;
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 5px 5px 5px 0px rgba(71, 71, 71, 1);
 }

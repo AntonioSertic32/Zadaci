@@ -410,13 +410,34 @@ class UpravljanjeZadacima {
     }
     
     // -------------------------------------------------------------------------------------- >>
-    // -------------------------------------------------------------------------------------- >> Dohvacanje Komentara
+    // -------------------------------------------------------------------------------------- >> Komentiranje
     // -------------------------------------------------------------------------------------- >>
 
-    //Dohvacanje komentara
-    public function DohvatiKomentare()
+    // Novi komentar
+    public function NoviKomentar($Id_zadatka, $Id_korisnika, $Sadrzaj, $Datum)
     {
-        $sQuery = "SELECT * FROM komentar";
+        $sQuery = "INSERT INTO komentar (id, korisnik, opis, datum, zadatak) VALUES (NULL, :Id_kor, :Sad, :Dat, :Id_zad)";
+        $oData = array(
+            'Id_zad' => $Id_zadatka,
+            'Id_kor' => $Id_korisnika,
+            'Sad' => $Sadrzaj,
+            'Dat' => $Datum
+        );
+        try
+        {
+            $oStatement = $this->connection->prepare($sQuery);
+            $oStatement->execute($oData);
+            return 1;
+        } catch (PDOException $error) {
+            return $error;
+        }                
+    }
+
+    //Dohvacanje komentara
+    public function DohvatiKomentare($zadatakID)
+    {
+        $sQuery = "SELECT komentar.id, k1.korisnicko_ime as korisnik, komentar.opis, komentar.datum, komentar.zadatak FROM komentar LEFT JOIN korisnik k1 ON komentar.korisnik=k1.id WHERE zadatak = $zadatakID";
+        
         $oRecord = $this->connection->query($sQuery);
         while ($oRow = $oRecord->fetch(PDO::FETCH_BOTH)) {
             $oKomentar = new Komentar(
@@ -427,6 +448,38 @@ class UpravljanjeZadacima {
                 $oRow['zadatak']
             );
             array_push($this->komentari, $oKomentar);
+        }
+    }
+    public function IspisiKomentare()
+    {
+        header('Content-type: charset=ISO-8859-1');
+        return json_encode($this->komentari);
+    }
+
+    // Uredivanje komentara
+    public function UrediKomentar($Opis, $ID) {
+        $sQuery = "UPDATE komentar SET opis = '$Opis' WHERE id = $ID";
+        
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }          
+    }
+
+    // Brisanje komentara
+    public function ObrisiKomentar($ID) {
+        $sQuery = "DELETE FROM komentar WHERE id = $ID";
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
         }
     }
     

@@ -62,6 +62,7 @@ switch ($sJsonID) {
     case 'dohvati_kreirani_zadatak':
         $upravljanjeZadacima = new UpravljanjeZadacima($userId);
         $upravljanjeZadacima -> DohvatiKreiraniZadatak($zadatakID);
+        
         echo $upravljanjeZadacima -> IspisiZadatak();
         
     break;
@@ -103,8 +104,9 @@ switch ($sJsonID) {
 
     case 'dohvati_komentare':
 
-        $upravljanjeZadacima = new UpravljanjeZadacima();
-        $upravljanjeZadacima -> DohvatiKomentare();
+        $upravljanjeZadacima = new UpravljanjeZadacima($userId);
+        $upravljanjeZadacima -> DohvatiKomentare($zadatakID);
+        echo $upravljanjeZadacima -> IspisiKomentare();
         
     break;
 

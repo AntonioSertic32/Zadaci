@@ -1025,6 +1025,7 @@ oModul.controller("glavniController", function (
   // ----------------------------------------------------------------------------- >> Komentiranje
   // ----------------------------------------------------------------------------- >>
 
+  // Dodavanje komentara
   $scope.openModalKomentiranje = function () {
     var modal_popup = angular.element("#modalKomentiranje");
     modal_popup.modal("show");
@@ -1032,6 +1033,105 @@ oModul.controller("glavniController", function (
 
   $scope.modalKomentiranje = function () {
     $scope.openModalKomentiranje();
+  };
+
+  $scope.Komentiranje = function (id) {
+    var date = new Date();
+
+    var oData = {
+      action_id: "novi_komentar",
+      id_zadatka: id,
+      id_korisnika: $rootScope.korisnik,
+      sadrzaj: $scope.komentar,
+      datum: date,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno objavljen komentar!");
+        $window.location.reload();
+      } else {
+        alert(response.data);
+      }
+    });
+  };
+
+  // Dohvacanje komentara
+  $scope.PrikaziKomentare = function () {
+    $scope.id_zadatka = JSON.parse(localStorage.getItem("zadatak"));
+    $timeout(function () {
+      $http({
+        method: "GET",
+        url:
+          "json.php?korisnik_id=" +
+          $rootScope.korisnik +
+          "&json_id=dohvati_komentare&zadatak_id=" +
+          $scope.id_zadatka,
+      }).then(
+        function (response) {
+          $scope.komentari = response.data;
+        },
+        function (error) {
+          console.log(error);
+        }
+      );
+    }, 200);
+  };
+
+  // Uredivanje komentara
+  $scope.openModalUrediKomentar = function () {
+    var modal_popup = angular.element("#modalUrediKomentar");
+    modal_popup.modal("show");
+  };
+
+  $scope.UrediKomentarModal = function (id, opis) {
+    $scope.edit_komentar_opis = opis;
+    $scope.edit_komentar_id = id;
+    $scope.openModalUrediKomentar();
+  };
+
+  $scope.UrediKomentar = function () {
+    var oData = {
+      action_id: "uredi_komentar",
+      opis: $scope.edit_komentar_opis,
+      id: $scope.edit_komentar_id,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno uređen komentar!");
+
+        $window.location.reload();
+      } else {
+        alert(response.data);
+      }
+    });
+  };
+
+  // Brisanje komentara
+
+  $scope.openModalObrisiKomentar = function () {
+    var modal_popup = angular.element("#modalObrisiKomentar");
+    modal_popup.modal("show");
+  };
+
+  $scope.ObrisiKomentarModal = function (id, opis) {
+    $scope.delete_komentar_id = id;
+    $scope.delete_komentar_opis = opis;
+    $scope.openModalObrisiKomentar();
+  };
+
+  $scope.ObrisiKomentar = function () {
+    var oData = {
+      action_id: "obrisi_komentar",
+      id: $scope.delete_komentar_id,
+    };
+    $http.post("action.php", oData).then(function (response) {
+      if (response.data == 1) {
+        alert("Uspješno ste obrisali komentar!");
+        $window.location.reload();
+      } else {
+        alert(response.data);
+      }
+    });
   };
 });
 

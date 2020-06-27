@@ -208,6 +208,39 @@ switch($sAction)
         echo $status;
     break;
 
+    // ------------------------------------------------------------------------ >> Komentiranje
+
+    case 'novi_komentar':
+        $Id_zadatka = $oPostData->id_zadatka;
+        $Id_korisnika = $oPostData->id_korisnika;
+        $Sadrzaj = $oPostData->sadrzaj;
+        $Datum = $oPostData->datum;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> NoviKomentar($Id_zadatka, $Id_korisnika, $Sadrzaj, $Datum);
+
+        echo $status;
+    break;
+
+    case 'uredi_komentar':
+        $Opis = $oPostData->opis;
+        $ID = $oPostData->id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> UrediKomentar($Opis, $ID);
+
+        echo $status;
+    break;
+
+    case 'obrisi_komentar':
+        $ID = $oPostData->id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> ObrisiKomentar($ID);
+
+        echo $status;
+    break;
+
 }
 
 ?>
