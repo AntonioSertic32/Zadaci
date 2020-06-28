@@ -154,19 +154,6 @@ a {
   color: #e4f3ad;
 }
 
-.card-dovrsen .zadatak_kreator a,
-.card-dovrsen .otvori_korisnika a,
-.card-dovrsen .zadatak_izvrsitelj a {
-  color: limegreen;
-  text-shadow: 1.5px 1.5px 1px black;
-  font-style: italic;
-}
-.card-dovrsen .zadatak_kreator a:hover,
-.card-dovrsen .otvori_korisnika a:hover,
-.card-dovrsen .zadatak_izvrsitelj a:hover {
-  color: #baf4a5 !important;
-  text-shadow: 2px 2px 1px black !important;
-}
 .card-dovrsen .zadatak_opis {
   color: black;
 }
@@ -185,18 +172,21 @@ a {
 .otvori_korisnika {
   font-weight: 700;
 }
+
 .zadatak_kreator a,
 .zadatak_izvrsitelj a,
-.otvori_korisnika a {
-  color: limegreen;
-  text-shadow: 1.5px 1.5px 1px black;
-  font-style: italic;
+.otvori_korisnika a,
+.komentar_kreator a {
+  color: #ffc107;
+  text-shadow: 1.5px 1.5px 1px #222;
+  font-style: normal;
 }
+
 .zadatak_kreator a:hover,
 .zadatak_izvrsitelj a:hover,
-.otvori_korisnika a:hover {
-  color: #3f613d;
-  text-shadow: 2px 2px 1px #e4f3ad;
+.otvori_korisnika a:hover,
+.komentar_kreator a:hover {
+  font-style: italic;
 }
 
 .detalji {
@@ -299,14 +289,6 @@ a {
   border: 2px solid black;
   border-radius: 10px;
 }
-/*
-.avatar-link {
-  opacity: 0.7;
-}
-.avatar-link:hover {
-  opacity: 1;
-}
-*/
 
 .isipisOdabranogAvatara {
   margin-top: 10px;
@@ -377,17 +359,6 @@ a {
 /* -------------------------------------------------------------------------------------------------------   */
 /* ------------------------------------------------------------------------------------------------------- Komentari  */
 /* -------------------------------------------------------------------------------------------------------   */
-
-.komentar_kreator {
-  font-weight: 700;
-}
-.komentar_kreator a {
-  color: #222;
-}
-.komentar_kreator a:hover {
-  color: #3f613d;
-  text-shadow: 2px 2px 1px #e4f3ad;
-}
 
 .komentar_opis {
   margin-left: 20px;
