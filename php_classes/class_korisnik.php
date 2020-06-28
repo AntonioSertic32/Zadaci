@@ -3,6 +3,13 @@
 class Osoba {
     public $ime = '';
     public $prezime = '';
+
+    public $slika ='';
+    public $tel ='';
+    public $bio ='';
+    public $prebivaliste ='';
+    public $datum_rodenja ='';
+    public $spol ='';
 }
 
 class Korisnik extends Osoba
@@ -12,14 +19,6 @@ class Korisnik extends Osoba
     public $email = '';
     public $korisnicko_ime = '';
 
-    public $slika ='';
-    public $tel ='';
-    public $bio ='';
-    public $prebivaliste ='';
-    public $datum_rodenja ='';
-    public $spol ='';
-
-    //Sintaksta nasljeđivanja ##!!!
     public function __construct($nId, $sName, $sSurname, $sPassword, $sEmail, $sUsername, $sSlika = NULL, $sTel = NULL, $sBio = NULL, $sPrebivaliste = NULL, $sDatum_rodenja = NULL, $sSpol = NULL)
     {
         $this->id = $nId;

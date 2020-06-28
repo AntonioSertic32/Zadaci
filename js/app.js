@@ -35,11 +35,6 @@ oModul.config(function ($routeProvider) {
     controller: "glavniController",
   });
 
-  $routeProvider.when("/kalendar", {
-    templateUrl: "templates/kalendar.html",
-    controller: "glavniController",
-  });
-
   // Korisnicki profil i postavke
   $routeProvider.when("/user", {
     templateUrl: "templates/user.html",
@@ -399,6 +394,7 @@ oModul.controller("glavniController", function (
     var modal_popup = angular.element("#modalDovrsenZadatak");
     modal_popup.modal("show");
     $scope.naziv_zadatka = $scope.zadatak.naziv;
+    $scope.id_zadatka = $scope.zadatak.id;
   };
 
   $scope.closeModalDovrsenZadatak = function () {
@@ -426,6 +422,53 @@ oModul.controller("glavniController", function (
         alert(response.data);
       }
     });
+    if ($scope.dovrsen_komentar != undefined) {
+      $scope.Komentiranje($scope.id_zadatka, "dovrsen");
+    }
+  };
+
+  // Vrati na izvrsavanje
+  $scope.openModalVratiNaIzvrsavanje = function () {
+    var modal_popup = angular.element("#modalVratiNaIzvrsavanje");
+    modal_popup.modal("show");
+    $scope.naziv_zadatka = $scope.zadatak.naziv;
+    $scope.id_zadatka = $scope.zadatak.id;
+  };
+
+  $scope.closeModalVratiNaIzvrsavanje = function () {
+    var modal_popup = angular.element("#modalVratiNaIzvrsavanje");
+    modal_popup.modal("hide");
+  };
+
+  $scope.VratiNaIzvrsavanjeModal = function () {
+    $scope.openModalVratiNaIzvrsavanje();
+  };
+
+  $scope.VratiNaIzvrsavanje = function () {
+    if (
+      $scope.izvrsavanje_komentar == undefined ||
+      $scope.izvrsavanje_komentar == ""
+    ) {
+      alert("Komentar je obavezan kod vraćanja zadatka u fazu izvršavanja!");
+    } else {
+      var oData = {
+        action_id: "vrati_na_izvrsavanje",
+        id: $scope.id_zadatka,
+      };
+      $http.post("action.php", oData).then(function (response) {
+        if (response.data == 1) {
+          alert("Uspješno ste vratili zadatak u fazu izvršavanja!");
+          $scope.closeModalVratiNaIzvrsavanje();
+          $timeout(function () {
+            $window.location.reload();
+          }, 500);
+        } else {
+          alert(response.data);
+        }
+      });
+
+      $scope.Komentiranje($scope.id_zadatka, "vrati");
+    }
   };
 
   // ----------------------------------------------------------------------------- >>
@@ -1035,16 +1078,35 @@ oModul.controller("glavniController", function (
     $scope.openModalKomentiranje();
   };
 
-  $scope.Komentiranje = function (id) {
+  $scope.Komentiranje = function (id, funkcija) {
     var date = new Date();
 
-    var oData = {
-      action_id: "novi_komentar",
-      id_zadatka: id,
-      id_korisnika: $rootScope.korisnik,
-      sadrzaj: $scope.komentar,
-      datum: date,
-    };
+    if (funkcija == "dovrsen") {
+      var oData = {
+        action_id: "novi_komentar",
+        id_zadatka: id,
+        id_korisnika: $rootScope.korisnik,
+        sadrzaj: $scope.dovrsen_komentar,
+        datum: date,
+      };
+    } else if (funkcija == "vrati") {
+      var oData = {
+        action_id: "novi_komentar",
+        id_zadatka: id,
+        id_korisnika: $rootScope.korisnik,
+        sadrzaj: $scope.izvrsavanje_komentar,
+        datum: date,
+      };
+    } else {
+      var oData = {
+        action_id: "novi_komentar",
+        id_zadatka: id,
+        id_korisnika: $rootScope.korisnik,
+        sadrzaj: $scope.komentar,
+        datum: date,
+      };
+    }
+
     $http.post("action.php", oData).then(function (response) {
       if (response.data == 1) {
         alert("Uspješno objavljen komentar!");

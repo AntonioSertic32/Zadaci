@@ -153,10 +153,13 @@ a {
   box-shadow: 5px 5px 5px 0px rgba(71, 71, 71, 1);
   color: #e4f3ad;
 }
+
 .card-dovrsen .zadatak_kreator a,
 .card-dovrsen .otvori_korisnika a,
 .card-dovrsen .zadatak_izvrsitelj a {
-  color: #e4f3ad !important;
+  color: limegreen;
+  text-shadow: 1.5px 1.5px 1px black;
+  font-style: italic;
 }
 .card-dovrsen .zadatak_kreator a:hover,
 .card-dovrsen .otvori_korisnika a:hover,
@@ -185,7 +188,9 @@ a {
 .zadatak_kreator a,
 .zadatak_izvrsitelj a,
 .otvori_korisnika a {
-  color: #222;
+  color: limegreen;
+  text-shadow: 1.5px 1.5px 1px black;
+  font-style: italic;
 }
 .zadatak_kreator a:hover,
 .zadatak_izvrsitelj a:hover,

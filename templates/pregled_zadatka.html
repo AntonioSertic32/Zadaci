@@ -24,9 +24,6 @@
       <li class="nav-item">
         <a class="nav-link" href="#!kreirani_zadaci">Kreirani zadaci</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#!kalendar">Kalendar</a>
-      </li>
     </ul>
 
     <div class="dropdown">
@@ -191,6 +188,15 @@
         <p>
           Potvrdite označavanje zadatka <b>{{naziv_zadatka}}</b> kao dovršenog.
         </p>
+        <label for="inputKomentar">Ostavite komentar:</label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="inputKomentar"
+          placeholder="..."
+          ng-model="dovrsen_komentar"
+          rows="3"
+        ></textarea>
       </div>
       <div class="modal-footer">
         <button type="submit" ng-click="DovrsiZadatak()" class="btn btn-dark">

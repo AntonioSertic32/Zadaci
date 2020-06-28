@@ -105,7 +105,17 @@ switch($sAction)
         echo $status;
         
     break;
-    
+
+    case 'vrati_na_izvrsavanje':
+        $ID = $oPostData->id;
+        
+        $upravljanjeZadacima = new UpravljanjeZadacima();
+        $status = $upravljanjeZadacima -> VratiNaIzvrsavanje($ID);
+
+        echo $status;
+        
+    break;
+
     // ------------------------------------------------------------------------ >> Postavke korisnickog profila
 
     case 'promjeni_avatara':

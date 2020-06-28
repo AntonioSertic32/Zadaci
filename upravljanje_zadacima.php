@@ -189,6 +189,19 @@ class UpravljanjeZadacima {
         }
     }
 
+    // Vrati na izvrsavanje
+    public function VratiNaIzvrsavanje($ID) {
+        $sQuery = "UPDATE zadatak SET stanje = 0 WHERE id = $ID";
+        try
+        {
+            $stmt =$this->connection->prepare($sQuery);
+            $stmt->execute();
+            return 1;
+        } catch (PDOException $error) {
+            return $error->getMessage();
+        }
+    }
+    
     // -------------------------------------------------------------------------------------- >>
     // -------------------------------------------------------------------------------------- >> Dohvacanje zadataka
     // -------------------------------------------------------------------------------------- >>

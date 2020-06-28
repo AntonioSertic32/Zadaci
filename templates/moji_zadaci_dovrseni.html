@@ -26,9 +26,6 @@
       <li class="nav-item">
         <a class="nav-link" href="#!kreirani_zadaci">Kreirani zadaci</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#!kalendar">Kalendar</a>
-      </li>
     </ul>
 
     <div class="dropdown">
@@ -128,9 +125,8 @@
         ng-repeat="zadatak in zadaci  | orderBy:orderProperty | filter: inputTekst "
       >
         <div
-          class="text-center"
+          class="text-center card-dovrsen"
           style="width: 25rem; height: 335px;"
-          ng-class="{'card': zadatak.stanje == 0, 'card-dovrsen':  zadatak.stanje == 1}"
         >
           <div class="card-body">
             <div class="d-flex justify-content-center">
