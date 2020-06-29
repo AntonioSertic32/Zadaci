@@ -14,7 +14,6 @@ a {
   min-height: calc(100vh - 34.4px);
   padding-top: 56px;
   margin: 0;
-  /*background-color: #a3e08e;*/
 }
 
 /* ------------------------------------------------------------------------------------------------------- Navigacija  */
@@ -229,7 +228,6 @@ a {
   width: 750px;
   margin: 0 auto;
   margin-top: 100px;
-  /*background-color: coral;*/
   height: auto;
 }
 .container-small {

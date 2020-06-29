@@ -20,7 +20,7 @@ class Zadatak
         $this->izvrsitelj = $sAssigned;
         $this->kreator = $sCreator;
         $this->stanje = $fProgress;
-	$this->opis = $sDescription;
+	    $this->opis = $sDescription;
     }
 }
 
