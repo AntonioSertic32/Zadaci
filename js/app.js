@@ -262,6 +262,7 @@ oModul.controller("glavniController", function (
             $scope.alertMessage = "Uspješno dodan novi zadatak!";
             $timeout(uspjesnoDodavanje, 1200);
           } else {
+            $scope.alertClass = "alert-danger";
             $scope.alertMessage = response.data;
           }
         });

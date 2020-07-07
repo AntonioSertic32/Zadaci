@@ -130,24 +130,34 @@ class UpravljanjeZadacima {
     // Novi zadatak
     public function NoviZadatak($Naziv, $Datum_pocetka, $Datum_zavrsetka, $Izvrsitelj, $Kreator, $Opis)
     {
-        $sQuery = "INSERT INTO zadatak (id, naziv, datum_pocetka, datum_zavrsetka, izvrsitelj, kreator, stanje, opis) VALUES (NULL, :Naziv, :Datum_pocetka, :Datum_zavrsetka, :Izvrsitelj, :Kreator, :Stanje, :Opis)";
-        $oData = array(
-            'Naziv' => $Naziv,
-            'Datum_pocetka' => $Datum_pocetka,
-            'Datum_zavrsetka' => $Datum_zavrsetka,
-            'Izvrsitelj' => $Izvrsitelj,
-            'Kreator' => $Kreator,
-            'Stanje' => 0,
-            'Opis' => $Opis,
-        );
-        try
-        {
-            $oStatement = $this->connection->prepare($sQuery);
-            $oStatement->execute($oData);
-            return 1;
-        } catch (PDOException $error) {
-            return $error;
-        }                
+        //SELECT * FROM zadatak WHERE naziv = "SPremiti sobu" AND izvrsitelj = 1
+        $sQueryOne = "SELECT * FROM zadatak WHERE naziv='$Naziv' AND izvrsitelj = '$Izvrsitelj' AND stanje = 0";
+        $oRecord = $this->connection->query($sQueryOne);
+        $row = $oRecord->fetch();
+        $count = $oRecord->rowCount();
+        if ($count > 0) {
+            return "Već postoji taj zadatak za tog korisnika!";
+        }
+        else {
+            $sQuery = "INSERT INTO zadatak (id, naziv, datum_pocetka, datum_zavrsetka, izvrsitelj, kreator, stanje, opis) VALUES (NULL, :Naziv, :Datum_pocetka, :Datum_zavrsetka, :Izvrsitelj, :Kreator, :Stanje, :Opis)";
+            $oData = array(
+                'Naziv' => $Naziv,
+                'Datum_pocetka' => $Datum_pocetka,
+                'Datum_zavrsetka' => $Datum_zavrsetka,
+                'Izvrsitelj' => $Izvrsitelj,
+                'Kreator' => $Kreator,
+                'Stanje' => 0,
+                'Opis' => $Opis,
+            );
+            try
+            {
+                $oStatement = $this->connection->prepare($sQuery);
+                $oStatement->execute($oData);
+                return 1;
+            } catch (PDOException $error) {
+                return $error;
+            }   
+        }             
     }
     
     // Obrisi zadatak
